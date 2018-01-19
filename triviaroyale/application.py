@@ -117,4 +117,4 @@ def register():
     else:
         return render_template("register.html")
 
-    # ik heb ioets veranderd
+# ik heb iets veranderd
