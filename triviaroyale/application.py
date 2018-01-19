@@ -116,3 +116,5 @@ def register():
     # "GET" method
     else:
         return render_template("register.html")
+
+    # ik heb ioets veranderd
