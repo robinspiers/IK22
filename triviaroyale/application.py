@@ -27,6 +27,12 @@ Session(app)
 # configure CS50 Library to use SQLite database
 db = SQL("sqlite:///triviaroyale.db")
 
+@app.route("/")
+@login_required
+def index():
+    # render updated index
+    return render_template("index.html")
+
 @app.route("/login", methods = ["GET", "POST"])
 def login():
     """Log user in."""
