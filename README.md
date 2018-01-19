@@ -40,6 +40,9 @@ Features die wij absoluut op onze website willen hebben:
 * Het spel spelen, waarbij een vraag wordt gerenderd vanuit een online triviadatabase
 * Het aantal vragen dat de speler goed heeft geantwoord totdat de speler stopt met spelen of een vraag fout beantwoordt, vormt de 'best streak'-score. Deze score komt op de main leaderboard terecht.
 
+#### Triviadatabase
+Wij willen gebruik maken van [deze triviadatabase](https://opentdb.com/).
+
 #### Afhankelijkheden
 **Databronnen**
 Wij willen gebruik maken van een online API database voor trivia vragen, het liefst met de mogelijkheid om te kiezen uit verschillende categorieën en moeilijkheidsgraad.
