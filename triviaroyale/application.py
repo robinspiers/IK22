@@ -28,9 +28,7 @@ Session(app)
 db = SQL("sqlite:///triviaroyale.db")
 
 @app.route("/")
-@login_required
 def index():
-    # render updated index
     return render_template("index.html")
 
 @app.route("/login", methods = ["GET", "POST"])
@@ -117,4 +115,6 @@ def register():
     else:
         return render_template("register.html")
 
-# ik heb iets veranderd
+@app.route("/pregame")
+def index():
+    return render_template("pregame.html")
