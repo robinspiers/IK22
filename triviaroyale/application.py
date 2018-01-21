@@ -115,6 +115,6 @@ def register():
     else:
         return render_template("register.html")
 
-@app.route("/pregame")
-def index():
-    return render_template("pregame.html")
+#@app.route("/pregame")
+#def index():
+    #return render_template("pregame.html")
