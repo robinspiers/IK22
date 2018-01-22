@@ -1,6 +1,5 @@
 # Webdb IK: Trivia Royale
 ### Groep IK22: Justin Mensah, Wesley Pul, Timo Rossenaar en Robin Spiers
-### 17-1-2018
 
 #### Samenvatting
 Wij willen een trivia website maken, deels gebaseerd op de populaire app trivia crack. Het idee is om een competitie te vormen tussen spelers door middel van een scorebord, die bijhoudt wie de meeste vragen achter elkaar goed heeft beantwoord. Ook willen we bij de geregistreerde accounts player profiles aanmaken, waarbij verschillende gegevens te zien zijn zoals totale aantal beantwoorde vragen, het aantal goede antwoorden tegenover het aantal foute antwoorden etc. De gebruikte trivia vragen zullen uit een online database komen.
