@@ -10,6 +10,7 @@ layout.html vormt het bedieningspaneel van de gebruiker, met de volgende knoppen
 * Leaderboards
 * Profile
 * Log Out
+
 En als de gebruiker nog niet is ingelogd:
 * Log In
 * Register
@@ -54,6 +55,7 @@ Op deze pagina is het persoonlijke profiel te zien van een gebruiker. Er zijn ve
 Helpers.py functies die wij willen gebruiken van CS50:
 * apology(): redirect naar apology.html indien er zich een error 400 voordoet.
 * login_required(f): zorgt ervoor dat een gebruiker ingelogd moet zijn om naar een pagina te gaan.
+
 Eigen functies:
 * categories(): kiest twee categorieën uit voor pregame.html
 * trivia(): haalt aan de hand van een opgegeven categorie een .json bestand op van https://opentdb.com.
