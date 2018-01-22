@@ -115,6 +115,19 @@ def register():
     else:
         return render_template("register.html")
 
+<<<<<<< HEAD
 #@app.route("/pregame")
 #def index():
     #return render_template("pregame.html")
+=======
+@app.route("/pregame", methods = ["GET", "POST"])
+def pregame():
+
+    # "POST" method
+    if request.method == "POST":
+        return redirect(url_for("question"))
+
+    # "GET" method
+    else:
+        return render_template("pregame.html")
+>>>>>>> 34be33017ef0c5b5e201135b6999e26e23db1210
