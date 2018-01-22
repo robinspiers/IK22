@@ -118,9 +118,10 @@ def register():
 @app.route("/pregame", methods = [])
 def pregame():
 
+    # "POST" method
     if request.method == "POST":
-
-        # Als gebruikers op pregame komen via GET
         return redirect(url_for("question"))
 
-    return render_template("pregame.html")
+    # "GET" method
+    else:
+        return render_template("pregame.html")
