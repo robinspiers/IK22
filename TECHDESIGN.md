@@ -52,7 +52,11 @@ Op deze pagina is het persoonlijke profiel te zien van een gebruiker. Er zijn ve
 * Correct / Wrong ratio
 
 ## Models / Helpers
-Helpers.py functies die wij willen gebruiken van CS50:
+### models.py
+Functies die voor interactie zorgen tussen application.py en triviaroyale.db
+
+### helpers.py
+Functies die wij willen gebruiken van CS50:
 * apology(): redirect naar apology.html indien er zich een error 400 voordoet.
 * login_required(f): zorgt ervoor dat een gebruiker ingelogd moet zijn om naar een pagina te gaan.
 

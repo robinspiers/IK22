@@ -5,6 +5,7 @@ from passlib.apps import custom_app_context as pwd_context
 from tempfile import mkdtemp
 
 from helpers import *
+from models import *
 
 # configure application
 app = Flask(__name__)
@@ -50,15 +51,14 @@ def login():
             return apology("Must provide password")
 
         # query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = :username", \
-                          username = request.form.get("username"))
+        username = find_user(request.form.get("username"), request.form.get("password"))
 
         # ensure username exists and password is correct
-        if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["hash"]):
-            return apology("Invalid username and/or password")
+        #if username == False:
+         #   return apology("Invalid username and/or password")
 
         # remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+        session["user_id"] = keepLoggedIn(username)
 
         # redirect user to home page
         return redirect(url_for("index"))
@@ -97,13 +97,11 @@ def register():
             return apology("Submitted passwords are not identical")
 
         # insert new user into users, store hash of the password
-        new_user = db.execute("INSERT INTO users (username, hash) VALUES(:username, :hash)", \
-                             username = request.form.get("username"), \
-                             hash = pwd_context.hash(request.form.get("password")))
+        new_user = insert_user(request.form.get("username"), request.form.get("password"))
 
         # ensure username does not already exist
-        if not new_user:
-            return apology("Username already exists")
+        #if new_user == False:
+         #   return apology("Username already exists")
 
         # keep user logged in
         session["user_id"] = new_user
