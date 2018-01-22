@@ -6,7 +6,7 @@
 Wij willen een trivia website maken, deels gebaseerd op de populaire app trivia crack. Het idee is om een competitie te vormen tussen spelers door middel van een scorebord, die bijhoudt wie de meeste vragen achter elkaar goed heeft beantwoord. Ook willen we bij de geregistreerde accounts player profiles aanmaken, waarbij verschillende gegevens te zien zijn zoals totale aantal beantwoorde vragen, het aantal goede antwoorden tegenover het aantal foute antwoorden etc. De gebruikte trivia vragen zullen uit een online database komen.
 
 #### Schetsen
-<img src='https://i.imgur.com/dTggzGa.jpg'>
+![schets](doc/schets1.jpg)
 
 #### Features
 **Index pagina:**
