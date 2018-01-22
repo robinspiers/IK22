@@ -115,7 +115,7 @@ def register():
     else:
         return render_template("register.html")
 
-@app.route("/pregame", methods = [])
+@app.route("/pregame", methods = ["GET", "POST"])
 def pregame():
 
     # "POST" method
