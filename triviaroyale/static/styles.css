@@ -36,3 +36,8 @@ main td
     /* left-align tables' cells */
     text-align: left;
 }
+
+main h1
+{
+    font-family: burbank;
+}

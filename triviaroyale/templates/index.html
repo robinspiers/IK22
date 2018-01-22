@@ -4,12 +4,15 @@
     Index
 {% endblock %}
 
+<link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet"/>
+
 {% block main %}
-    <table class="table table-striped" style="width:100%">
-      <tr>
-        <th>Rank</th>
-        <th>Score</th>
-        <th>Player</th>
-      </tr>
-    </table>
+  <h>Leaderboard</h>
+  <table class="table table-striped" style="width:100%">
+    <tr>
+      <th>Rank</th>
+      <th>Score</th>
+      <th>Player</th>
+    </tr>
+  </table>
 {% endblock %}
