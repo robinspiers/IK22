@@ -2,7 +2,7 @@ from categories import categories
 from exceptions import (ConnectionError, HTTPError, APIError)
 from questions import Question
 import requests
-
+from html.parser import HTMLParser
 
 class Client(object):
     def __init__(self):
