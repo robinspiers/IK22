@@ -38,10 +38,10 @@ Als de gebruiker niet is ingelogd of niet wil dat er gegevens worden opgeslagen 
 #### methods: "GET" & "POST"
 Als je ervoor kiest om het spel online te spelen worden je gegevens opgeslagen in de database.
 
-### Pregame:
-In questions/ zit het bestand categories.py, met daarin een dictionary met als keys alle mogelijke categorieën en als values de getallen die je moet gebruiken om op basis van de gekozen categorie een vraag op te halen uit de online triviadatabase.
-Allereerst worden er uit de lijst van categories.py twee categorieën willekeurig uitgekozen, die worden getoond als knoppen op pregame.html, waar de gebruiker dus uit een categorie kan kiezen.
-Vervolgens als de gebruiker een categorie heeft gekozen, wordt de value van de categorie gebruikt in de url om een vraag te renderen.
+#### /pregame
+In de folder questions zit een bestand categories.py, waarin zich een dictionary _categories_ bevindt, waarbij de keys de namen van de categorieën zijn en de values de getallen die nodig zijn om een bepaalde categorie-vraag op te vragen via de url van de online trivia database.
+In helpers.py komt een functie twocategories() die twee willekeurig gekozen categorieën returnt. Vervolgens worden deze twee categorieën door middel van UPDATE toegevoegd aan tabel categories in de database triviaroyale.db.
+De twee categorieën worden vervolgens weergegeven op pregame.html, waarbij de gebruiker kan kiezen van welke categorie er een vraag moet worden gekozen. Als de gebruiker op een knop heeft geklikt wordt de value van de categorie gebruikt in de url om een vraag op te halen uit de online triviadatabase.
 
 ### Route Leaderboards "/leaderboards": leaderboards.html
 #### methods: "GET" & "POST"
