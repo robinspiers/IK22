@@ -1,4 +1,4 @@
-from api import Client
-from exceptions import (OpenTDBException, HTTPError, ConnectionError, APIError)
-from categories import categories
-from question import Question
+#from api import Client
+#from exceptions import (OpenTDBException, HTTPError, ConnectionError, APIError)
+#from categories import categories
+#from question import Question

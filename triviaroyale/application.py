@@ -3,21 +3,12 @@ from flask import Flask, flash, redirect, render_template, request, session, url
 from flask_session import Session
 from passlib.apps import custom_app_context as pwd_context
 from tempfile import mkdtemp
-from flask_sqlalchemy import SQLAlchemy
-
 
 from helpers import *
+from models import *
 
 # configure application
 app = Flask(__name__)
-
-# Flask-SQLAlchemy
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///triviaroyale.db"
-app.config["SQLALCHEMY_ECHO"] = True
-db = SQLAlchemy(app)
-
-from models import Registrant
 
 # ensure responses aren't cached
 if app.config["DEBUG"]:
@@ -27,6 +18,15 @@ if app.config["DEBUG"]:
         response.headers["Expires"] = 0
         response.headers["Pragma"] = "no-cache"
         return response
+
+# configure session to use filesystem (instead of signed cookies)
+app.config["SESSION_FILE_DIR"] = mkdtemp()
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
+# configure CS50 Library to use SQLite database
+db = SQL("sqlite:///triviaroyale.db")
 
 @app.route("/")
 def index():
@@ -100,6 +100,9 @@ def register():
         registrant = Registrant(username = request.form["username"])
         db.session.add(registrant)
         db.session.commit()
+        # redirect to homepage
+        return redirect(url_for("index"))
+
         # redirect to homepage
         return redirect(url_for("index"))
 

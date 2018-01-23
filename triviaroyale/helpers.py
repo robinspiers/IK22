@@ -1,6 +1,10 @@
 import csv
 import urllib.request
+import random
+import sys
+sys.path.append('/questions')
 
+from questions import categories
 from flask import redirect, render_template, request, session
 from functools import wraps
 
@@ -31,3 +35,9 @@ def login_required(f):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
+
+def randomcategory():
+    # momenteel wordt er willekeurig 1 categorie uitgekozen voor in de url
+    categories_list = [i for i in range(9,33)]
+    options = random.choice(categories_list)
+    return options
