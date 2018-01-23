@@ -37,7 +37,7 @@ def login():
     """Log user in."""
 
     # forget any user_id
-    session.clear()
+    #session.clear()
 
     # "POST" method
     if request.method == "POST":
@@ -50,19 +50,15 @@ def login():
         elif not request.form.get("password"):
             return apology("Must provide password")
 
-        # query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = :username", \
-                          username = request.form.get("username"))
-
-        # ensure username exists and password is correct
-        if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["hash"]):
-            return apology("Invalid username and/or password")
+       # ensure username exists and password is correct
+        #if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["hash"]):
+            #return apology("Invalid username and/or password")
 
         # remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+       #session["user_id"] = rows[0]["id"]
 
         # redirect user to home page
-        return redirect(url_for("index"))
+       # return redirect(url_for("index"))
 
     # "GET" method
     else:
@@ -93,11 +89,14 @@ def register():
         elif not request.form.get("password"):
             return apology("Must provide password")
 
+        elif not request.form.get("password2"):
+            return apology("Provide same password again")
+
         # require user to submit the same password again
         elif request.form.get("password") != request.form.get("password2"):
             return apology("Submitted passwords are not identical")
 
-        registrant = Registrant(username = request.form["username"])
+        registrant = Registrant(username = request.form["username"], password = request.form["password"])
         db.session.add(registrant)
         db.session.commit()
         # redirect to homepage
