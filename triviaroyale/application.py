@@ -3,11 +3,21 @@ from flask import Flask, flash, redirect, render_template, request, session, url
 from flask_session import Session
 from passlib.apps import custom_app_context as pwd_context
 from tempfile import mkdtemp
+from flask_sqlalchemy import SQLAlchemy
+
 
 from helpers import *
 
 # configure application
 app = Flask(__name__)
+
+# Flask-SQLAlchemy
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///triviaroyale.db"
+app.config["SQLALCHEMY_ECHO"] = True
+db = SQLAlchemy(app)
+
+from models import Registrant
 
 # ensure responses aren't cached
 if app.config["DEBUG"]:
@@ -17,15 +27,6 @@ if app.config["DEBUG"]:
         response.headers["Expires"] = 0
         response.headers["Pragma"] = "no-cache"
         return response
-
-# configure session to use filesystem (instead of signed cookies)
-app.config["SESSION_FILE_DIR"] = mkdtemp()
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
-
-# configure CS50 Library to use SQLite database
-db = SQL("sqlite:///triviaroyale.db")
 
 @app.route("/")
 def index():
@@ -96,18 +97,9 @@ def register():
         elif request.form.get("password") != request.form.get("password2"):
             return apology("Submitted passwords are not identical")
 
-        # insert new user into users, store hash of the password
-        new_user = db.execute("INSERT INTO users (username, hash) VALUES(:username, :hash)", \
-                             username = request.form.get("username"), \
-                             hash = pwd_context.hash(request.form.get("password")))
-
-        # ensure username does not already exist
-        if not new_user:
-            return apology("Username already exists")
-
-        # keep user logged in
-        session["user_id"] = new_user
-
+        registrant = Registrant(username = request.form["username"])
+        db.session.add(registrant)
+        db.session.commit()
         # redirect to homepage
         return redirect(url_for("index"))
 
