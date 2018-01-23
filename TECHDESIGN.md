@@ -53,7 +53,7 @@ Op deze pagina is het persoonlijke profiel te zien van een gebruiker. Er zijn ve
 
 ## Models / Helpers
 ### models.py
-Functies die voor interactie zorgen tussen application.py en triviaroyale.db
+In models.py staan classes en functies die voor interactie zorgen tussen application.py en triviaroyale.db
 
 ### helpers.py
 Functies die wij willen gebruiken van CS50:
@@ -65,4 +65,6 @@ Eigen functies:
 * trivia(): haalt aan de hand van een opgegeven categorie een .json bestand op van https://opentdb.com.
 
 ## Plugins en Frameworks
+### [Flask](http://flask.pocoo.org/)
 ### [Bootstrap](https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css)
+### [Jinja2](http://jinja.pocoo.org/docs/2.10/)
