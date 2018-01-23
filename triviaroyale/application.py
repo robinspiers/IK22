@@ -4,7 +4,7 @@ from flask_session import Session
 from passlib.apps import custom_app_context as pwd_context
 from tempfile import mkdtemp
 from flask_sqlalchemy import SQLAlchemy
-
+from flask.ext.login import LoginManager
 
 from helpers import *
 
@@ -17,7 +17,11 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///triviaroyale.db"
 app.config["SQLALCHEMY_ECHO"] = True
 db = SQLAlchemy(app)
 
-from models import Registrant
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+from models import User
 
 # ensure responses aren't cached
 if app.config["DEBUG"]:
@@ -27,6 +31,11 @@ if app.config["DEBUG"]:
         response.headers["Expires"] = 0
         response.headers["Pragma"] = "no-cache"
         return response
+
+# load user from an id.
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 @app.route("/")
 def index():
