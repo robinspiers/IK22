@@ -43,6 +43,14 @@ In de folder questions zit een bestand categories.py, waarin zich een dictionary
 In helpers.py komt een functie twocategories() die twee willekeurig gekozen categorieën returnt. Vervolgens worden deze twee categorieën door middel van UPDATE toegevoegd aan tabel categories in de database triviaroyale.db.
 De twee categorieën worden vervolgens weergegeven op pregame.html, waarbij de gebruiker kan kiezen van welke categorie er een vraag moet worden gekozen. Als de gebruiker op een knop heeft geklikt wordt de value van de categorie gebruikt in de url om een vraag op te halen uit de online triviadatabase.
 
+#### /question
+Er wordt een variabele _result_ gebruikt om het json bestand van de triviavraag te bewaren. result["question"] toont de vraag, result["correct_answer"] toont het juiste antwoord en result["incorrect answers"] geeft de onjuiste antwoorden.
+Deze waardes worden weer opgeslagen in een tabel _trivia_ in de database, zodat de gebruiker ze op question.html kan zien. Als de gebruiker op correct_answer klikt wordt zijn score met een punt verhoogd. Zo niet, dan wordt zijn score gereset naar 0.
+Na het geven van een antwoord wordt de gebruiker geredirect naar answers.html.
+
+#### /answers
+Op deze pagina wordt het blokje met het goede antwoord groen gekleurd en de blokjes met de foute antwoorden worden rood. Ook zijn er nu in tegenstelling tot question.html nu twee nieuwe knoppen: "Quit Game", waarbij de gebruiker geredirect wordt naar index.html en "Next Question", waarbij de gebruiker weer wordt geredirect naar pregame.html.
+
 ### Route Leaderboards "/leaderboards": leaderboards.html
 #### methods: "GET" & "POST"
 Op deze pagina kunnen gebruikers verschillende leaderboards bekijken.
