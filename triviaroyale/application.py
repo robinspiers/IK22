@@ -123,9 +123,10 @@ def register():
 @app.route("/pregame", methods = ["GET", "POST"])
 def pregame():
 
-    # "POST" method
+     # "POST" method
     if request.method == "POST":
-                # get two random categories from the dictionary
+
+        # get two random categories from the dictionary
         category1 = randomcategory()
         category2 = randomcategory()
         while category1 == category2:
@@ -141,20 +142,7 @@ def pregame():
 
     # "GET" method
     else:
-        # get two random categories from the dictionary
-        category1 = randomcategory()
-        category2 = randomcategory()
-        while category1 == category2:
-            category2 == randomcategory()
-
-        # get a question with the demanded category from the api
-        if request.form.get("category1"):
-            Question.category = categories[category1]
-        if request.form.get("category2"):
-            Question.category = categories[category2]
-
-        return render_template("pregame.html")
-
+        return render_template("question.html")
 #@app.route("right_answer", methods = ["GET", "POST"])
 #def right_answer:
 
