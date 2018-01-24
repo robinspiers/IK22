@@ -41,6 +41,3 @@ def randomcategory():
     categories_list = [i for i in range(9,33)]
     options = random.choice(categories_list)
     return options
-
-def trivia(number):
-    return "https://opentdb.com/api.php?amount=1&category={{ number }}&type=multiple"
