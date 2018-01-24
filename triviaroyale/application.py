@@ -45,30 +45,6 @@ def index():
 def login():
     """Log user in."""
 
-    # forget any user_id
-    #session.clear()
-
-    # "POST" method
-    if request.method == "POST":
-
-        # ensure username was submitted
-        if not request.form.get("username"):
-            return apology("Must provide username")
-
-        # ensure password was submitted
-        elif not request.form.get("password"):
-            return apology("Must provide password")
-
-       # ensure username exists and password is correct
-        #if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["hash"]):
-            #return apology("Invalid username and/or password")
-
-        # remember which user has logged in
-       #session["user_id"] = rows[0]["id"]
-
-        # redirect user to home page
-       # return redirect(url_for("index"))
-
     # "GET" method
     else:
         return render_template("login.html")
@@ -91,25 +67,27 @@ def register():
     if request.method == "POST":
 
         # require user to submit username
-        if not request.form.get("username"):
+        if not request.form["username"]:
             return apology("Must provide username")
 
         # require user to submit password
-        elif not request.form.get("password"):
+        elif not request.form["password"]:
             return apology("Must provide password")
 
-        elif not request.form.get("password2"):
+        elif not request.form["password2"]:
             return apology("Provide same password again")
 
         # require user to submit the same password again
-        elif request.form.get("password") != request.form.get("password2"):
+        elif request.form["password"] != request.form["password2"]:
             return apology("Submitted passwords are not identical")
 
-        registrant = Registrant(username = request.form["username"], password = request.form["password"])
-        db.session.add(registrant)
+        user = User(request.form['username'] , request.form['password'])
+        db.session.add(user)
         db.session.commit()
+        flash('User successfully registered')
+
         # redirect to homepage
-        return redirect(url_for("index"))
+        return redirect(url_for('login'))
 
     # "GET" method
     else:
