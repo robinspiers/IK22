@@ -1,6 +1,6 @@
-from categories import categories
-from exceptions import (ConnectionError, HTTPError, APIError)
-from questions import Question
+from triviaroyale.categories import categories
+from triviaroyale.exceptions import (ConnectionError, HTTPError, APIError)
+from triviaroyale.questions import Question
 import requests
 from html.parser import HTMLParser
 
@@ -86,7 +86,7 @@ class Client(object):
             correct_answer = unescape(question_dict['correct_answer'])
             incorrect_answers = unescape(question_dict['incorrect_answers'])
             questions_list.append(Question(category=category, type=type, difficulty=difficulty, question=question, correct_answer=correct_answer, incorrect_answers=incorrect_answers))
-            answers_list.append(correct_answer, i for i in incorrect_answers)
+            answers_list.append(correct_answer, incorrect_answers)
         return questions_list
 
     def getCategories(self):
