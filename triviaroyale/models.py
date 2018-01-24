@@ -12,6 +12,7 @@ class User(db.Model):
     id = db.Column('user_id', db.Integer, primary_key=True)
     username = db.Column('username', db.Text, unique=True, index=True)
     password = db.Column('password', db.Text)
+    todos = db.relationship('Todo' , backref='user',lazy='dynamic')
 
     def __init__(self, username, password):
         self.username = username
@@ -32,3 +33,9 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % (self.username)
+
+class Todo(db.Model):
+    __tablename__ = 'todos'
+    id = db.Column('todo_id', db.Integer, primary_key=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
