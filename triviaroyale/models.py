@@ -27,6 +27,7 @@ class User(db.Model):
         return False
 
     def get_id(self):
+        unicode = str
         return unicode(self.id)
 
     def __repr__(self):

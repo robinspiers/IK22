@@ -4,7 +4,8 @@ from flask_session import Session
 from passlib.apps import custom_app_context as pwd_context
 from tempfile import mkdtemp
 from flask_sqlalchemy import SQLAlchemy
-from flask.ext.login import LoginManager
+from flask_login import LoginManager
+from flask_login import login_user , logout_user , current_user , login_required
 
 from helpers import *
 
@@ -17,6 +18,13 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///triviaroyale.db"
 app.config["SQLALCHEMY_ECHO"] = True
 db = SQLAlchemy(app)
 
+# configure session to use filesystem (instead of signed cookies)
+app.config["SESSION_FILE_DIR"] = mkdtemp()
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
+# initialize LoginManager
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -43,11 +51,24 @@ def index():
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
-    """Log user in."""
 
-    # "GET" method
-    else:
-        return render_template("login.html")
+    # 'GET' method
+    if request.method == 'GET':
+        return render_template('login.html')
+    # "POST" method
+    username = request.form['username']
+    password = request.form['password']
+    # opzoeken van gebruiker in Database, waarbij username/password in db gelijk moet zijn aan ingevulde username/password
+    registered_user = User.query.filter_by(username=username).first()
+    if registered_user is None:
+        flash('Username is invalid' , 'error')
+    if not pwd_context.verify(password, registered_user.password):
+        flash('Password is invalid' , 'error')
+        return redirect(url_for('login'))
+    # gebruiker inloggen omdat hij in database staat
+    login_user(registered_user)
+    flash('Logged in successfully')
+    return redirect(request.args.get('next') or url_for('index'))
 
 @app.route("/logout")
 def logout():
@@ -80,7 +101,7 @@ def register():
         # require user to submit the same password again
         elif request.form["password"] != request.form["password2"]:
             return apology("Submitted passwords are not identical")
-
+        # toevoegen van user aan Database
         user = User(request.form['username'] , request.form['password'])
         db.session.add(user)
         db.session.commit()
