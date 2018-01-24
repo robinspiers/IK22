@@ -1,4 +1,4 @@
-from categories import categories
+from triviaroyale.categories import categories
 
 class Question(object):
     def __init__(self, category='General Knowledge', type="multiple", difficulty="easy", question="Example question?", correct_answer="Yes", incorrect_answers=["No"]):

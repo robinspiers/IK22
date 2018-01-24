@@ -4,7 +4,7 @@ import random
 import sys
 sys.path.append('/questions')
 
-from questions import categories
+from triviaroyale.questions import categories
 from flask import redirect, render_template, request, session
 from functools import wraps
 

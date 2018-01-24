@@ -6,7 +6,7 @@
 # gebruikte bronnen https://blog.openshift.com/use-flask-login-to-add-user-authentication-to-your-python-application/
 # https://flask-login.readthedocs.io/en/latest/#flask_login.login_user
 
-from application import *
+from triviaroyale.application import *
 
 class User(db.Model):
 

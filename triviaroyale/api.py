@@ -77,6 +77,7 @@ class Client(object):
         questions_from_tdb = response['results']
         unescape = HTMLParser().unescape
         questions_list = []
+        answers_list = []
         for question_dict in questions_from_tdb:
             category = unescape(question_dict['category'])
             type = question_dict['type']
@@ -85,6 +86,7 @@ class Client(object):
             correct_answer = unescape(question_dict['correct_answer'])
             incorrect_answers = unescape(question_dict['incorrect_answers'])
             questions_list.append(Question(category=category, type=type, difficulty=difficulty, question=question, correct_answer=correct_answer, incorrect_answers=incorrect_answers))
+            answers_list.append(correct_answer, i for i in incorrect_answers)
         return questions_list
 
     def getCategories(self):
