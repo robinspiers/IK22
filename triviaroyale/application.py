@@ -59,6 +59,10 @@ def login():
     # "POST" method
     username = request.form['username']
     password = request.form['password']
+    remember_me = False
+    if 'remember_me' in request.form:
+        remember_me = True
+
     # opzoeken van gebruiker in Database, waarbij username/password in db gelijk moet zijn aan ingevulde username/password
     registered_user = User.query.filter_by(username=username).first()
     if registered_user is None:
@@ -67,7 +71,7 @@ def login():
         flash('Password is invalid' , 'error')
         return redirect(url_for('login'))
     # gebruiker inloggen omdat hij in database staat
-    login_user(registered_user)
+    login_user(registered_user, remember = remember_me)
     flash('Logged in successfully')
     return redirect(request.args.get('next') or url_for('index'))
 
