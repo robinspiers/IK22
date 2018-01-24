@@ -125,10 +125,7 @@ def pregame():
 
     # "POST" method
     if request.method == "POST":
-        return redirect(url_from("question"))
 
-    # "GET" method
-    else:
         # get two random categories from the dictionary
         category1 = randomcategory()
         category2 = randomcategory()
@@ -141,4 +138,8 @@ def pregame():
         if request.form.get("category2"):
             Question.category = categories[category2]
 
-        return render_template("pregame.html")
+        return redirect(url_from("question"))
+
+    # "GET" method
+    else:
+        return render_template("question.html")
