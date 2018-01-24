@@ -45,6 +45,9 @@ if app.config["DEBUG"]:
 def load_user(id):
     return User.query.get(int(id))
 
+@app.before_request
+def before_request():
+    g.user = current_user
 
 @app.route("/")
 def index():
