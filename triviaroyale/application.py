@@ -8,7 +8,7 @@ from flask_login import LoginManager
 from flask_login import login_user , logout_user , current_user , login_required
 
 
-import helpers
+from helpers import *
 
 # configure application
 app = Flask(__name__)
@@ -31,8 +31,6 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 from models import User
-from questions import *
-
 
 # ensure responses aren't cached
 if app.config["DEBUG"]:
@@ -127,18 +125,9 @@ def pregame():
 
     # "POST" method
     if request.method == "POST":
-        return render_template("pregame.html")
+        return redirect(url_for("question"))
 
     # "GET" method
     else:
-        # get two random categories from the dictionary
-        category1 = randomcategory()
-        category2 = randomcategory()
+        return render_template("pregame.html")
 
-        # get a question with the demanded category from the api
-        if request.form.get("category1"):
-            Question.category = categories[category1]
-        if request.form.get("category2"):
-            Question.category = categories[category2]
-
-        return redirect(url_from("question"))
