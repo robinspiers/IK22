@@ -131,6 +131,8 @@ def pregame():
         # get two random categories from the dictionary
         category1 = randomcategory()
         category2 = randomcategory()
+        while category1 == category2:
+            category2 == randomcategory()
 
         # get a question with the demanded category from the api
         if request.form.get("category1"):
