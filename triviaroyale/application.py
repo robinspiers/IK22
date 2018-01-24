@@ -1,11 +1,12 @@
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session, url_for
+from flask import Flask, g, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
 from passlib.apps import custom_app_context as pwd_context
 from tempfile import mkdtemp
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_login import login_user , logout_user , current_user , login_required
+
 
 from helpers import *
 
