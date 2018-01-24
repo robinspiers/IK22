@@ -3,6 +3,8 @@
 # python3
 # from application import db
 # db.create_all()
+# gebruikte bronnen https://blog.openshift.com/use-flask-login-to-add-user-authentication-to-your-python-application/
+# https://flask-login.readthedocs.io/en/latest/#flask_login.login_user
 
 from application import *
 
