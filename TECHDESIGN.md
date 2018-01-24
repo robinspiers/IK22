@@ -43,6 +43,13 @@ In de folder questions zit een bestand categories.py, waarin zich een dictionary
 In helpers.py komt een functie twocategories() die twee willekeurig gekozen categorieën returnt. Vervolgens worden deze twee categorieën door middel van UPDATE toegevoegd aan tabel categories in de database triviaroyale.db.
 De twee categorieën worden vervolgens weergegeven op pregame.html, waarbij de gebruiker kan kiezen van welke categorie er een vraag moet worden gekozen. Als de gebruiker op een knop heeft geklikt wordt de value van de categorie gebruikt in de url om een vraag op te halen uit de online triviadatabase.
 
+TODO:
+* functie randomcategorie() die een willekeurige categorie returnt
+* in database: een tabel 'Categories' met kolom 'number' en kolom 'name'
+* models.py moet het nummer en de naam van de categorie in deze tabel zetten
+* op pregame.html komen twee buttons met {{ categories.name }}
+* De gebruiker klikt op een categorie, en hierdoor wordt het nummer in de url gezet van de triviadatabase zodat er een vraag wordt opgehaald in question.html
+
 #### /question
 Er wordt een variabele _result_ gebruikt om het json bestand van de triviavraag te bewaren. result["question"] toont de vraag, result["correct_answer"] toont het juiste antwoord en result["incorrect answers"] geeft de onjuiste antwoorden.
 Deze waardes worden weer opgeslagen in een tabel _trivia_ in de database, zodat de gebruiker ze op question.html kan zien. Als de gebruiker op correct_answer klikt wordt zijn score met een punt verhoogd. Zo niet, dan wordt zijn score gereset naar 0.
