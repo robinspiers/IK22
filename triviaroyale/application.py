@@ -45,6 +45,7 @@ if app.config["DEBUG"]:
 def load_user(id):
     return User.query.get(int(id))
 
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -73,12 +74,9 @@ def login():
 @app.route("/logout")
 def logout():
     """Log user out."""
-
-    # forget any user_id
-    session.clear()
-
+    logout_user()
     # redirect user to login form
-    return redirect(url_for("login"))
+    return redirect(url_for("index"))
 
 @app.route("/register", methods = ["GET", "POST"])
 def register():
