@@ -8,6 +8,7 @@ from flask_login import LoginManager
 from flask_login import login_user , logout_user , current_user , login_required
 
 from triviaroyale.helpers import *
+from triviaroyale.api import *
 
 # configure application
 app = Flask(__name__)
