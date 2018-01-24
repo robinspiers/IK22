@@ -6,10 +6,7 @@ from tempfile import mkdtemp
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_login import login_user , logout_user , current_user , login_required
-from categories import *
-from questions import *
-import requests
-import random
+
 
 from helpers import *
 
@@ -128,18 +125,9 @@ def pregame():
 
     # "POST" method
     if request.method == "POST":
-        return render_template("pregame.html")
+        return redirect(url_for("question"))
 
     # "GET" method
     else:
-        # get two random categories from the dictionary
-        category1 = random_choice(categories.key())
-        category2 = random_choice(categories.key())
+        return render_template("pregame.html")
 
-        # get a question with the demanded category from the api
-        if request.form.get("category1"):
-            Question.category = categories[category1]
-        if request.form.get("category2"):
-            Question.category = categories[category2]
-
-        return redirect(url_from("question"))
