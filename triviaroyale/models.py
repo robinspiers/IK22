@@ -42,15 +42,14 @@ class Todo(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
-class Categories1(db.Model):
+class Categories(db.Model):
 
-    __tablename__ = "category1"
-    name = db.Column(categories[category1], db.Text)
-    number = db.Column('category1', db.Integer)
+    __tablename__ = "categories"
+    id = db.Column('category_id', db.Integer)
+    category = db.Column('category', db.Text)
 
-     def __init__(self, name, number):
-        self.name = name
-        self.number = number
+     def __init__(self, category):
+        self.category = category
 
 
 
