@@ -44,13 +44,17 @@ class Todo(db.Model):
 
 class Categories1(db.Model):
 
-        __tablename__ = "category1"
-        name = db.Column(categories[category1], db.Text)
-        number = db.Column('category1', db.Integer)
+    __tablename__ = "category1"
+    name = db.Column(categories[category1], db.Text)
+    number = db.Column('category1', db.Integer)
 
-      def __init__(self, name, number):
+     def __init__(self, name, number):
         self.name = name
         self.number = number
+
+
+
+
 
 
 
