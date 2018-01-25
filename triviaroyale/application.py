@@ -9,6 +9,7 @@ from flask_login import login_user , logout_user , current_user , login_required
 
 from triviaroyale.helpers import *
 from triviaroyale.api import *
+from triviaroyale.categories import *
 
 # configure application
 app = Flask(__name__)
@@ -60,20 +61,25 @@ def login():
     # 'GET' method
     if request.method == 'GET':
         return render_template('login.html')
+
     # "POST" method
     username = request.form['username']
     password = request.form['password']
+
     remember_me = False
     if 'remember_me' in request.form:
         remember_me = True
 
     # opzoeken van gebruiker in Database, waarbij username/password in db gelijk moet zijn aan ingevulde username/password
     registered_user = User.query.filter_by(username=username).first()
+
     if registered_user is None:
         flash('Username is invalid' , 'error')
+
     if not pwd_context.verify(password, registered_user.password):
         flash('Password is invalid' , 'error')
         return redirect(url_for('login'))
+
     # gebruiker inloggen omdat hij in database staat
     login_user(registered_user, remember = remember_me)
     flash('Logged in successfully')
@@ -83,13 +89,11 @@ def login():
 def logout():
     """Log user out."""
     logout_user()
-    # redirect user to login form
     return redirect(url_for("index"))
 
 @app.route("/register", methods = ["GET", "POST"])
 def register():
     """Register user."""
-
     # "POST" method
     if request.method == "POST":
 
@@ -127,19 +131,26 @@ def pregame():
     if request.method == "POST":
 
         # get two random categories from the dictionary
-        category1 = randomcategory()
-        category2 = randomcategory()
-        while category1 == category2:
-            category2 == randomcategory()
+        firstcat = randomcategory()
+        secondcat = randomcategory()
+        while firstcat == secondcat:
+            secondcat = random.category()
 
-        # get a question with the demanded category from the api
-        if request.form.get("category1"):
-            Question.category = categories[category1]
-        if request.form.get("category2"):
-            Question.category = categories[category2]
+        # temporary list of category id's
+        catlist = []
+        catlist.append(firstcat)
+        catlist.append(secondcat)
+
+        # create new dict of chosen category id : name
+        catidnames = {}
+        for i in categories:
+            if i in catlist:
+                catidnames.update({i:categories[i]})
+            else:
+                pass
 
         return redirect(url_from("question"))
 
     # "GET" method
     else:
-        return render_template("question.html")
+        return render_template("pregame.html")
