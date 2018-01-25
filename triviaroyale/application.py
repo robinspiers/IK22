@@ -9,6 +9,7 @@ from flask_login import login_user , logout_user , current_user , login_required
 
 from triviaroyale.helpers import *
 from triviaroyale.api import *
+from triviaroyale.categories import *
 
 # configure application
 app = Flask(__name__)
@@ -60,20 +61,25 @@ def login():
     # 'GET' method
     if request.method == 'GET':
         return render_template('login.html')
+
     # "POST" method
     username = request.form['username']
     password = request.form['password']
+
     remember_me = False
     if 'remember_me' in request.form:
         remember_me = True
 
     # opzoeken van gebruiker in Database, waarbij username/password in db gelijk moet zijn aan ingevulde username/password
     registered_user = User.query.filter_by(username=username).first()
+
     if registered_user is None:
         flash('Username is invalid' , 'error')
+
     if not pwd_context.verify(password, registered_user.password):
         flash('Password is invalid' , 'error')
         return redirect(url_for('login'))
+
     # gebruiker inloggen omdat hij in database staat
     login_user(registered_user, remember = remember_me)
     flash('Logged in successfully')
@@ -83,13 +89,11 @@ def login():
 def logout():
     """Log user out."""
     logout_user()
-    # redirect user to login form
     return redirect(url_for("index"))
 
 @app.route("/register", methods = ["GET", "POST"])
 def register():
     """Register user."""
-
     # "POST" method
     if request.method == "POST":
 
