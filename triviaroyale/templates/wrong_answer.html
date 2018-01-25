@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Wrong answer
+{% endblock %}
+
+{% block main %}
+    <form action="{{ url_for('wrong_answer') }}" method="get">
+        <fieldset>
+            <h1>You got it wrong. Go back to the homepage</h1>
+        </fieldset>
+    </form>
+    <form action="{{ url_for('index') }}" method="get">
+        <fieldset>
+            <button type="submit" name="homepage">Homepage</button>
+        </fieldset>

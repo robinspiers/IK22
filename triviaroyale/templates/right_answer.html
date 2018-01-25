@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Right answer
+{% endblock %}
+
+{% block main %}
+    <form action="{{ url_for('right_answer') }}" method="get">
+        <fieldset>
+            <h1>You got it right! Would you like to proceed?</h1>
+        </fieldset>
+    </form>
+    <form action="{{ url_for('pregame')  }}" method="get">
+        <fieldset>
+            <button type="submit" name="yes">Yes!</button>
+        </fieldset>
+    </form>
+    <form action="{{ url_for('index')  }}" method="get">
+        <fieldset>
+            <button type="submit" name="no">No!</button>
+        </fieldset>
+    </form>

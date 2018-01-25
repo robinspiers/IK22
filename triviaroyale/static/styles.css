@@ -7,13 +7,46 @@
 }
 
 /* colors for navbar */
-.navbar-default .navbar-brand .yellow
+.navbar-default .navbar-brand .white
 {
-    color: #FFDF00;
+    color: #FFFFFF;
 }
-.navbar-default .navbar-brand .green
+.navbar-default .navbar-brand .babyblue1
 {
-    color: #85bb65;
+    color: #00a8ff;
+}
+.navbar-default .navbar-brand .babyblue2
+{
+    color: #0097e6;
+}
+.navbar-default .navbar-brand .blue1
+{
+    color: #487eb0;
+}
+.navbar-default .navbar-brand .blue2
+{
+    color: #40739e;
+}
+.navbar-default .navbar-brand .navyblue1
+{
+    color: #273c75;
+}
+.navbar-default .navbar-brand .navyblue2
+{
+    color: #192a56;
+}
+
+.navbar-default {
+    background-color: #353839 !important;
+    border-color: #414a4c !important;
+    color: #FFFFFF !important;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td,
+.table-striped>tbody>tr:nth-child(odd)>th
+{
+   background-color: #353839 !important;
+   border-color:#414a4c !important;
 }
 
 main .form-control
