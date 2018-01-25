@@ -123,32 +123,31 @@ def register():
 @app.route("/pregame", methods = ["GET", "POST"])
 def pregame():
 
-     # "POST" method
+        # "POST" method
     if request.method == "POST":
 
         # get two random categories from the dictionary
-        category1 = randomcategory()
-        category2 = randomcategory()
-        while category1 == category2:
-            category2 == randomcategory()
+        firstcat = randomcategory()
+        secondcat = randomcategory()
+        while firstcat == secondcat:
+            secondcat = random.category()
 
-        # get a question with the demanded category from the api
-        if request.form.get("category1"):
-            Question.category = categories[category1]
-        if request.form.get("category2"):
-            Question.category = categories[category2]
+        # temporary list of category id's
+        catlist = []
+        catlist.append(firstcat)
+        catlist.append(secondcat)
+
+        # create new dict of chosen category id : name
+        catidnames = {}
+        for i in categories:
+            if i in catlist:
+                catidnames.update({i:categories[i]})
+            else:
+                pass
 
         return redirect(url_from("question"))
 
     # "GET" method
     else:
-        return render_template("question.html")
-#@app.route("right_answer", methods = ["GET", "POST"])
-#def right_answer:
-
-
-#@app.route("wrong_answer", methods = ["GET", "POST"])
-#def wrong_answer:
- #   if request.form.get("homepage"):
-  #      render_template("index.html")
+        return render_template("pregame.html")
 
