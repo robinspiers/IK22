@@ -71,6 +71,11 @@ Op deze pagina is het persoonlijke profiel te zien van een gebruiker. Er zijn ve
 * Correct answers given
 * Correct / Wrong ratio
 
+### Aantekeningen voortgangsgesprek 25-1
+aparte tabel die de gekozen categorie onthoud, heeft een relatie met user
+
+SQL: heel makkelijk naar beneden, heel moeilijk naar rechts
+
 ## Models / Helpers
 ### models.py
 In models.py staan classes en functies die voor interactie zorgen tussen application.py en triviaroyale.db

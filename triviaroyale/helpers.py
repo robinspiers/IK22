@@ -1,6 +1,7 @@
 import csv
-import urllib.request
 import random
+import urllib.request
+import json
 import sys
 sys.path.append('/questions')
 
@@ -36,6 +37,14 @@ def login_required(f):
 
 def randomcategory():
     # momenteel wordt er willekeurig 1 categorie uitgekozen voor in de url
-    categories_list = [i for i in range(9,33)]
-    options = random.choice(categories_list)
-    return options
+    categoryids_list = [i for i in range(9,33)]
+    category = random.choice(categories_list)
+    return category
+
+url = 'https://opentdb.com/api.php?amount=50&category=23&type=multiple'
+req = urllib.request.Request(url)
+
+# url lezen en decoden voor gebruik
+r = urllib.request.urlopen(req).read()
+cont = json.loads(r.decode('utf-8'))
+counter = 0
