@@ -7,11 +7,12 @@
 {% block main %}
     <form action="{{ url_for('pregame') }}" method="get", "post">
         <fieldset>
-            {% for category in categories %}
             <div class="form-group">
-                <button class="button btn-default" type="submit" name=category.id>{{ category.name }}</button>
+                <button type="button" class="btn btn-danger btn-lg btn-block" name="firstcat">{{ firstcat.name }}</button>
             </div>
-            {% endfor %}
+            <div class="form-group">
+                <button class="button btn-default" type="submit" name="secondcat">{{ secondcat.name }}</button>
+            </div>
         </fieldset>
     </form>
 {% endblock %}
