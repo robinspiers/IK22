@@ -45,10 +45,10 @@ class Todo(db.Model):
 class Categories(db.Model):
 
     __tablename__ = "categories"
-    id = db.Column('category_id', db.Integer)
-    category = db.Column('category', db.Text)
+    id = db.Column('category_id', db.Integer, primary_key=True)
+    category = db.Column('name', db.Text)
 
-     def __init__(self, category):
+    def __init__(self, category):
         self.category = category
 
 
