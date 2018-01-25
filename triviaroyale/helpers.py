@@ -2,6 +2,7 @@ import csv
 import random
 import urllib.request
 import json
+import random
 import sys
 sys.path.append('/questions')
 
@@ -36,15 +37,22 @@ def login_required(f):
     return decorated_function
 
 def randomcategory():
-    # momenteel wordt er willekeurig 1 categorie uitgekozen voor in de url
-    categoryids_list = [i for i in range(9,33)]
-    category = random.choice(categories_list)
-    return category
+    # get a random category id
+    categoryids = [i for i in range(9,33)]
+    randomid = random.choice(categoryids)
 
-url = 'https://opentdb.com/api.php?amount=50&category=23&type=multiple'
+    # get category name using id in dict
+    for categoryid in categories:
+        if randomid == categoryid:
+            pickedCategory = categories[categoryid]
+        else:
+            pass
+    return pickedCategory
+
+"""url = 'https://opentdb.com/api.php?amount=50&category=23&type=multiple'
 req = urllib.request.Request(url)
 
 # url lezen en decoden voor gebruik
 r = urllib.request.urlopen(req).read()
 cont = json.loads(r.decode('utf-8'))
-counter = 0
+counter = 0"""

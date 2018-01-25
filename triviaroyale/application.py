@@ -136,19 +136,6 @@ def pregame():
         while firstcat == secondcat:
             secondcat = random.category()
 
-        # temporary list of category id's
-        catlist = []
-        catlist.append(firstcat)
-        catlist.append(secondcat)
-
-        # create new dict of chosen category id : name
-        catidnames = {}
-        for i in categories:
-            if i in catlist:
-                catidnames.update({i:categories[i]})
-            else:
-                pass
-
         return redirect(url_from("question"))
 
     # "GET" method
