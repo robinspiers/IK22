@@ -15,7 +15,7 @@ class User(db.Model):
     username = db.Column('username', db.Text, unique=True, index=True)
     password = db.Column('password', db.Text)
     todos = db.relationship('Todo' , backref='user',lazy='dynamic')
-    catergory_rel = db.relationship(Çategories, backref = 'user', lazy = 'dynamic')
+    catergory_rel = db.relationship(Categories.category, backref = 'user', lazy = 'dynamic')
     def __init__(self, username, password):
         self.username = username
         self.password = pwd_context.hash(password)

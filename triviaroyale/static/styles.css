@@ -35,6 +35,10 @@
 {
     color: #192a56;
 }
+.navbar-default .navbar-text
+{
+    color: 	#FFFAF0;
+}
 
 .navbar-default {
     background-color: #353839 !important;

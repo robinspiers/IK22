@@ -1,6 +1,5 @@
 import csv
 import random
-from urls import urls
 import json
 import random
 import sys
@@ -11,19 +10,6 @@ from functools import wraps
 from urllib.request import Request, urlopen
 from triviaroyale.categories import categories
 from triviaroyale.urls import urls
-
-def apology(message, code=400):
-    """Renders message as an apology to user."""
-    def escape(s):
-        """
-        Escape special characters.
-        https://github.com/jacebrowning/memegen#special-characters
-        """
-        for old, new in [("-", "--"), (" ", "-"), ("_", "__"), ("?", "~q"),
-                         ("%", "~p"), ("#", "~h"), ("/", "~s"), ("\"", "''")]:
-            s = s.replace(old, new)
-        return s
-    return render_template("apology.html", top=code, bottom=escape(message)), code
 
 def login_required(f):
     """
@@ -38,7 +24,10 @@ def login_required(f):
     return decorated_function
 
 def randomcategory():
-    # get a random category id
+    """
+    Get a random category id.
+    """
+    # choose random number
     categoryids = [i for i in range(9,33)]
     randomid = random.choice(categoryids)
 

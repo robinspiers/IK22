@@ -35,30 +35,38 @@
                 text-transform: uppercase;
             }
         </style>
-        <div class="container">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-sm navbar-dark bg-faded">
+                 <div class="container">
                     <div class="navbar-header">
-                        <button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="{{ url_for('index') }}"><span class="white">Trivia Royale</span></a>
+                        <a class="navbar-brand" href="{{ url_for('index') }}">Trivia Royale</a>
                     </div>
-                    <div class="collapse navbar-collapse" id="navbar">
+                    <div class="collapse navbar-collapse justify-content-end" id="nav-content">
                         {% if session.user_id %}
-                            <ul class="nav navbar-nav">
-                                <li><a href="{{ url_for('pregame') }}">Play!</a></li>
+                            <ul class="nav navbar-nav navbar.justify-content-start">
+                                <li>
+                                    <a class="nav-link" href="{{ url_for('pregame') }}">Play!</a>
+                                </li>
                             </ul>
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                            <ul class="nav navbar-nav navbar.justify-content-end">
+                                <li>
+                                    <a class="navbar-item" href="{{ url_for('logout') }}">Log Out</a>
+                                </li>
                             </ul>
                         {% else %}
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a href="{{ url_for('register') }}">Register</a></li>
-                                <li><a href="{{ url_for('login') }}">Log In</a></li>
+                            <ul class="nav navbar-nav navbar.justify-content-end">
+                                <li>
+                                    <a class="navbar-item" href="{{ url_for('register') }}">Register</a>
+                                </li>
+                                <li>
+                                    <a class="navbar-item" href="{{ url_for('login') }}">Log In</a>
+                                </li>
                             </ul>
                         {% endif %}
                     </div>
