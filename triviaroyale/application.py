@@ -127,7 +127,7 @@ def register():
 @app.route("/pregame", methods = ["GET", "POST"])
 def pregame():
 
-        # "POST" method
+    # "POST" method
     if request.method == "POST":
 
         # get two random categories from the dictionary
@@ -136,9 +136,10 @@ def pregame():
         while firstcat == secondcat:
             secondcat = random.category()
 
+        trivia = getTrivia(request.form.get)
+
         return redirect(url_from("question"))
 
     # "GET" method
     else:
         return render_template("pregame.html")
-
