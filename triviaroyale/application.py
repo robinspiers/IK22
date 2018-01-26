@@ -134,7 +134,7 @@ def pregame():
         while firstcat == secondcat:
             secondcat = random.category()
 
-        randomcats = Categories(firstcat = firstcat, secondcat = secondcat)
+        randomcats = Categories(firstcat, secondcat)
         db.session.add(randomcats)
         db.session.commit()
 
