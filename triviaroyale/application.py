@@ -77,7 +77,7 @@ def login():
         return redirect(url_for('login'))
 
     # gebruiker inloggen omdat hij in database staat
-    login_user(registered_user, remember = remember_me)
+    login_user(registered_user)
     flash('Logged in successfully')
     return redirect(request.args.get('next') or url_for('index'))
 

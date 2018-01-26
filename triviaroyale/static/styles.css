@@ -49,8 +49,8 @@
 .table-striped>tbody>tr:nth-child(odd)>td,
 .table-striped>tbody>tr:nth-child(odd)>th
 {
-   background-color: #8a00ff !important;
-   border-color:# !important;
+   background-color: #6700ff !important;
+   border-color:#8a00ff !important;
 }
 
 main .form-control
