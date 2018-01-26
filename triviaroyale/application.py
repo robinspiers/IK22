@@ -32,6 +32,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 from triviaroyale.models import User
+from triviaroyale.models import Categories
 
 # ensure responses aren't cached
 if app.config["DEBUG"]:
@@ -128,8 +129,8 @@ def pregame():
     if request.method == "POST":
 
         # get two random categories from the dictionary
-        firstcat = randomcategory()
-        secondcat = randomcategory()
+        firstcat = helpers.randomcategory()
+        secondcat = helpers.randomcategory()
         while firstcat == secondcat:
             secondcat = random.category()
 
@@ -152,6 +153,15 @@ def pregame():
 
     # "GET" method
     else:
+        # get two random categories from the dictionary
+        firstcat = randomcategory()
+        secondcat = randomcategory()
+        while firstcat == secondcat:
+            secondcat = random.category()
+
+        randomcats = Categories(firstcat, secondcat)
+        db.session.add(randomcats)
+        db.session.commit()
         return render_template("pregame.html", categories=categories)
 
 """@app.route("/question", method = ["POST"])

@@ -1,17 +1,24 @@
-from urls import urls
-import json
-from urllib.request import Request, urlopen
+import random
+from categories import categories
 
-url = urls["Art"]
-req = Request(url)
+def randomcategory():
+    """
+    Get a random category id.
+    """
+    # choose random number
+    categoryids = [i for i in range(9,33)]
+    randomid = random.choice(categoryids)
 
-r = urlopen(req).read()
-triviafile = json.loads(r.decode('utf-8'))
+    # get category name using id in dict
+    for categoryid in categories:
+        if randomid == categoryid:
+            pickedCategory = categories[categoryid]
+        else:
+            pass
+    return pickedCategory
 
-# create variables
-results = triviafile["results"][0]
-question = results["question"]
-correct_answer = results["correct_answer"]
-incorrect_answer1 = results["incorrect_answers"][0]
-incorrect_answer2 = results["incorrect_answers"][1]
-incorrect_answer3 = results["incorrect_answers"][2]
+firstcat = randomcategory()
+secondcat = randomcategory()
+while firstcat == secondcat:
+    secondcat = random.category()
+print(firstcat,secondcat)
