@@ -66,10 +66,6 @@ def login():
     username = request.form['username']
     password = request.form['password']
 
-    remember_me = False
-    if 'remember_me' in request.form:
-        remember_me = True
-
     # opzoeken van gebruiker in Database, waarbij username/password in db gelijk moet zijn aan ingevulde username/password
     registered_user = User.query.filter_by(username=username).first()
 
@@ -153,3 +149,10 @@ def pregame():
     # "GET" method
     else:
         return render_template("pregame.html")
+
+@app.route("/question", methods = ["POST"])
+def question():
+    if request.form.get == correct_answer:
+        return redirect(url_from("right_answer"))
+    else:
+        return redirect(url_from("wrong_answer"))
