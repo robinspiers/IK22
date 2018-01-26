@@ -133,6 +133,10 @@ def pregame():
         while firstcat == secondcat:
             secondcat = random.category()
 
+        randomcats = Categories(firstcat, secondcat)
+        db.session.add(randomcats)
+        db.session.commit()
+
         # get trivia file from online API
         trivia = getTrivia(request.form.get)
 
@@ -148,7 +152,7 @@ def pregame():
 
     # "GET" method
     else:
-        return render_template("pregame.html")
+        return render_template("pregame.html", categories=categories)
 
 """@app.route("/question", method = ["POST"])
 def question():
