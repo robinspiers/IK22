@@ -57,7 +57,7 @@ def index():
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
-
+    """Log user in."""
     # 'GET' method
     if request.method == 'GET':
         return render_template('login.html')
@@ -111,7 +111,8 @@ def register():
         # require user to submit the same password again
         elif request.form["password"] != request.form["password2"]:
             return apology("Submitted passwords are not identical")
-        # toevoegen van user aan Database
+
+        # add user to database
         user = User(request.form['username'] , request.form['password'])
         db.session.add(user)
         db.session.commit()
@@ -126,7 +127,7 @@ def register():
 
 @app.route("/pregame", methods = ["GET", "POST"])
 def pregame():
-
+    """Let user choose one out of two random categories."""
     # "POST" method
     if request.method == "POST":
 
@@ -136,7 +137,16 @@ def pregame():
         while firstcat == secondcat:
             secondcat = random.category()
 
+        # get trivia file from online API
         trivia = getTrivia(request.form.get)
+
+        # create variables
+        results = trivia["results"][0]
+        question = results["question"]
+        correct_answer = results["correct_answer"]
+        incorrect_answer1 = results["incorrect_answers"][0]
+        incorrect_answer2 = results["incorrect_answers"][1]
+        incorrect_answer3 = results["incorrect_answers"][2]
 
         return redirect(url_from("question"))
 
