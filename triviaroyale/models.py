@@ -15,7 +15,7 @@ class User(db.Model):
     username = db.Column('username', db.Text, unique=True, index=True)
     password = db.Column('password', db.Text)
     todos = db.relationship('Todo' , backref='user',lazy='dynamic')
-
+    catergory_rel = db.relationship(Çategories, backref = 'user', lazy = 'dynamic')
     def __init__(self, username, password):
         self.username = username
         self.password = pwd_context.hash(password)
@@ -47,6 +47,7 @@ class Categories(db.Model):
     __tablename__ = "categories"
     id = db.Column('category_id', db.Integer, primary_key=True)
     category = db.Column('name', db.Text)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user.id'))
 
     def __init__(self, category):
         self.category = category
