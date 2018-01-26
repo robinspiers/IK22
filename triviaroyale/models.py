@@ -14,12 +14,16 @@ class User(db.Model):
     id = db.Column('user_id', db.Integer, primary_key=True)
     username = db.Column('username', db.Text, unique=True, index=True)
     password = db.Column('password', db.Text)
+    highscore = db.Column('highscore', db.Integer)
     todos = db.relationship('Todo' , backref='user',lazy='dynamic')
-    catergory_rel = db.relationship('Categories', backref = 'user', lazy = 'dynamic')
+    catergories = db.relationship('Categories', backref = 'user', lazy = 'dynamic')
+    results = db.relationship('Results', backref = 'user', lazy = 'dynamic')
 
-    def __init__(self, username, password):
+
+    def __init__(self, username, password, highscore):
         self.username = username
         self.password = pwd_context.hash(password)
+        self.highscore = highscore
 
     def is_authenticated(self):
         return True
@@ -47,12 +51,32 @@ class Categories(db.Model):
 
     __tablename__ = "categories"
     id = db.Column('category_id', db.Integer, primary_key=True)
-    category1 = db.Column('category1', db.Text)
-    category2 = db.Column('category2', db.Text)
+    firstcat = db.Column('firstcat', db.Text)
+    secondcat = db.Column('secondcat', db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
-    def __init__(self, category):
-        self.category = category
+    def __init__(self, firstcat, secondcat):
+        self.firstcat = firstcat
+        self.secondcat = secondcat
+
+class Results(db.Model):
+    __tablename__ = "results"
+    id = db.Column('result_id', db.Integer, primary_key=True)
+    question = db.Column('question', db.Text)
+    correct_answer = db.Column('correct answer', db.Text)
+    incorrect_answer1 = db.Column('incorrect_answer1', db.Text)
+    incorrect_answer2 = db.Column('incorrect_answer2', db.Text)
+    incorrect_answer3 = db.Column('incorrect_answer3', db.Text)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+
+    def __init__(self, question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3):
+        self.correct_answer = correct_answer
+        self.question = question
+        self.incorrect_answer1 = incorrect_answer1
+        sel.incorrect_answer2 = incorrect_answer2
+        self.incorrect_answer3 = incorrect_answer3
+
+
 
 
 
