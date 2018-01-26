@@ -150,9 +150,24 @@ def pregame():
     else:
         return render_template("pregame.html")
 
-@app.route("/question", methods = ["POST"])
+@app.route("/question", method = ["POST"])
 def question():
+    """Let the user answer the trivia question."""
     if request.form.get == correct_answer:
         return redirect(url_from("right_answer"))
     else:
         return redirect(url_from("wrong_answer"))
+
+@app.route("/right_answer", method = ["POST"])
+def right_answer():
+    if request.form.get == yes:
+        return redirect(url_from("pregame"))
+    else:
+        return redirect(url_from("index"))
+
+@app.route("/wrong_answer", method = ["POST"])
+def right_answer():
+    if request.form.get == yes:
+        return redirect(url_from("pregame"))
+    else:
+        return redirect(url_from("index"))
