@@ -1,5 +1,4 @@
 
-
 # voer dit in terminal bij toevoegen nieuwe table
 # python3
 # from application import db
@@ -54,6 +53,7 @@ class Categories(db.Model):
 
     def __init__(self, category):
         self.category = category
+
 
 
 
