@@ -136,6 +136,8 @@ def pregame():
         while firstcat == secondcat:
             secondcat = random.category()
 
+        trivia = getTrivia(request.form.get)
+
         return redirect(url_from("question"))
 
     # "GET" method
