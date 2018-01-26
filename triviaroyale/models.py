@@ -50,7 +50,7 @@ class Categories(db.Model):
     id = db.Column('category_id', db.Integer, primary_key=True)
     category1 = db.Column('category1', db.Text)
     category2 = db.Column('category2', db.Text)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
     def __init__(self, category):
         self.category = category
