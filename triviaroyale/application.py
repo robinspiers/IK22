@@ -109,7 +109,7 @@ def register():
             return apology("Submitted passwords are not identical")
 
         # add user to database
-        user = User(request.form['username'] , request.form['password'])
+        user = User(request.form['username'], request.form['password'], 0)
         db.session.add(user)
         db.session.commit()
         flash('User successfully registered')
