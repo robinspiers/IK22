@@ -6,6 +6,7 @@
 
 {% block main %}
     <form action="{{ url_for('pregame') }}" method="get", "post">
+        <h1 align="center">Choose your category:</h1>
         <fieldset>
             <div class="form-group">
                 <button type="submit" class="btn btn-warning btn-lg btn-block" name="firstcat">{{ cats.firstcat }}</button>

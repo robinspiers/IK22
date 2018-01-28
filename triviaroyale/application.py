@@ -128,16 +128,6 @@ def pregame():
     # "POST" method
     if request.method == "POST":
 
-        # get two random categories from the dictionary
-        firstcat = helpers.randomcategory()
-        secondcat = helpers.randomcategory()
-        while firstcat == secondcat:
-            secondcat = random.category()
-
-        randomcats = Categories(firstcat, secondcat)
-        db.session.add(randomcats)
-        db.session.commit()
-
         # get trivia file from online API
         trivia = getTrivia(request.form.get)
 
@@ -153,15 +143,26 @@ def pregame():
 
     # "GET" method
     else:
-        # get two random categories from the dictionary
-        firstcat = randomcategory()
-        secondcat = randomcategory()
-        while firstcat == secondcat:
-            secondcat = random.category()
 
-        randomcats = Categories(firstcat, secondcat)
-        db.session.add(randomcats)
-        db.session.commit()
+        # If no categories in DB, add them
+        if Categories.query.get(1) is None:
+
+            # get two random categories from the dictionary
+            firstcat = randomcategory()
+            secondcat = randomcategory()
+            while firstcat == secondcat:
+                secondcat = randomcategory()
+
+            randomcats = Categories(firstcat, secondcat)
+            db.session.add(randomcats)
+            db.session.commit()
+
+        else:
+            # update categories
+            Categories.query.get(1).firstcat = randomcategory()
+            Categories.query.get(1).secondcat = randomcategory()
+            db.session.commit()
+
         # query for categories
         cats = Categories.query.get(1)
         return render_template("pregame.html", cats=cats)
