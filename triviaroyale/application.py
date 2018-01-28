@@ -162,7 +162,9 @@ def pregame():
         randomcats = Categories(firstcat, secondcat)
         db.session.add(randomcats)
         db.session.commit()
-        return render_template("pregame.html", categories=categories)
+        # query for categories
+        cats = Categories.query.get(1)
+        return render_template("pregame.html", cats=cats)
 
 """@app.route("/question", method = ["POST"])
 def question():
