@@ -128,6 +128,12 @@ def pregame():
     # "POST" method
     if request.method == "POST":
 
+        if request.method.form["category1"]:
+            return redirect(url_from("questioncat1"))
+
+        if request.method.form["category2"]:
+            return redirect(url_from("questioncat2"))
+
         # get trivia file from online API
         trivia = getTrivia(request.form.get)
 
@@ -139,7 +145,6 @@ def pregame():
         incorrect_answer2 = results["incorrect_answers"][1]
         incorrect_answer3 = results["incorrect_answers"][2]
 
-        return redirect(url_from("question"))
 
     # "GET" method
     else:
