@@ -3,7 +3,6 @@ import random
 import json
 import random
 import sys
-sys.path.append('/questions')
 
 from flask import redirect, render_template, request, session
 from functools import wraps

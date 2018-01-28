@@ -32,6 +32,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 from triviaroyale.models import User
+from triviaroyale.models import Categories
 
 # ensure responses aren't cached
 if app.config["DEBUG"]:
@@ -127,15 +128,11 @@ def pregame():
     # "POST" method
     if request.method == "POST":
 
-        # get two random categories from the dictionary
-        firstcat = randomcategory()
-        secondcat = randomcategory()
-        while firstcat == secondcat:
-            secondcat = random.category()
+        if request.method.form["category1"]:
+            return redirect(url_from("questioncat1"))
 
-        randomcats = Categories(firstcat = firstcat, secondcat = secondcat)
-        db.session.add(randomcats)
-        db.session.commit()
+        if request.method.form["category2"]:
+            return redirect(url_from("questioncat2"))
 
         # get trivia file from online API
         trivia = getTrivia(request.form.get)
@@ -148,11 +145,32 @@ def pregame():
         incorrect_answer2 = results["incorrect_answers"][1]
         incorrect_answer3 = results["incorrect_answers"][2]
 
-        return redirect(url_from("question"))
 
     # "GET" method
     else:
-        return render_template("pregame.html", categories=categories)
+
+        # If no categories in DB, add them
+        if Categories.query.get(1) is None:
+
+            # get two random categories from the dictionary
+            firstcat = randomcategory()
+            secondcat = randomcategory()
+            while firstcat == secondcat:
+                secondcat = randomcategory()
+
+            randomcats = Categories(firstcat, secondcat)
+            db.session.add(randomcats)
+            db.session.commit()
+
+        else:
+            # update categories
+            Categories.query.get(1).firstcat = randomcategory()
+            Categories.query.get(1).secondcat = randomcategory()
+            db.session.commit()
+
+        # query for categories
+        cats = Categories.query.get(1)
+        return render_template("pregame.html", cats=cats)
 
 """@app.route("/question", method = ["POST"])
 def question():
@@ -161,14 +179,12 @@ def question():
         return redirect(url_from("right_answer"))
     else:
         return redirect(url_from("wrong_answer"))
-
 @app.route("/right_answer", method = ["POST"])
 def right_answer():
     if request.form.get == yes:
         return redirect(url_from("pregame"))
     else:
         return redirect(url_from("index"))
-
 @app.route("/wrong_answer", method = ["POST"])
 def right_answer():
     if request.form.get == yes:
