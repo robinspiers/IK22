@@ -41,7 +41,7 @@
 }
 
 .navbar-default {
-    background-color: #353839 !important;
+    background-color: #0511c2 !important;
     border-color: #414a4c !important;
     color: #FFFFFF !important;
 }
@@ -72,9 +72,4 @@ main td
 {
     /* left-align tables' cells */
     text-align: left;
-}
-
-main h1
-{
-    font-family: burbank;
 }
