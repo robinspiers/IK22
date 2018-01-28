@@ -43,4 +43,4 @@ def getTrivia(categoryname):
     req = Request(url)
     r = urlopen(req).read()
     triviafile = json.loads(r.decode('utf-8'))
-    print(triviafile)
+    return(triviafile)
