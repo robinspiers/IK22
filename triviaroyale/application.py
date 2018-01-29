@@ -217,27 +217,19 @@ def question():
             # when answer is correct
             if request.form.get("answer") == "correct":
                 flash('Answer is correct!')
-                return redirect(url_for('pregame'))
+                return redirect(url_for('proceed'))
 
             elif request.form.get("answer") == "incorrect":
                 flash("Answer is wrong!")
-                return redirect(url_for('pregame'))
+                return redirect(url_for('proceed'))
 
 
-
-"""@app.route("/right_answer", methods = ["GET", "POST"])
-def right_answer():
+@app.route("/proceed", methods = ["GET", "POST"])
+def proceed():
     if request.method == 'POST':
-        if request.form.get == yes:
+        if request.form.get("submit") == "yes":
             return redirect(url_from("pregame"))
-        elif request.form.get == no:
+        elif request.form.get("submit") == "no":
             return redirect(url_from("index"))
     else:
-        return render_template("right_answer.html")
-@app.route("/wrong_answer", methods = ["GET", "POST"])
-def wrong_answer():
-    if request.method == 'POST':
-        if request.form.get == Homepage:
-            return redirect(url_from("index"))
-    else:
-        return render_template("wrong_answer.html")"""
+        return render_template("proceed.html")
