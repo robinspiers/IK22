@@ -82,7 +82,7 @@ class Choice(db.Model):
     choice = db.Column('choice', db.Text)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.category_id'))
 
-    def __init__(self, category):
+    def __init__(self, choice):
         self.choice = choice
 
 

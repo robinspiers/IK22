@@ -130,11 +130,19 @@ def pregame():
     if request.method == "POST":
 
         if request.form.get("cat") == "1":
+            if Choice.query.get(1) is None:
+                keuze = Choice(Categories.query.get(1).firstcat)
+                db.session.add(keuze)
+                db.session.commit()
             Choice.query.get(1).choice = Categories.query.get(1).firstcat
             db.session.commit()
             return redirect(url_for("question"))
 
         if request.form.get("cat") == "2":
+            if Choice.query.get(1) is None:
+                keuze = Choice(Categories.query.get(1).secondcat)
+                db.session.add(keuze)
+                db.session.commit()
             Choice.query.get(1).choice = Categories.query.get(1).secondcat
             db.session.commit()
             return redirect(url_for("question"))
