@@ -128,10 +128,10 @@ def pregame():
     # "POST" method
     if request.method == "POST":
 
-        if request.form["firstcat"] == "category1":
+        if request.form.get("cat") == "1":
             return redirect(url_for("question"))
 
-        else:
+        if request.form.get("cat") == "2":
             return redirect(url_for("question"))
 
     # "GET" method
