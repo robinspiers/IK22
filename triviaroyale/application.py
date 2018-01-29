@@ -213,10 +213,17 @@ def question():
 
     # 'POST' method
     else:
-        if request.get.form == "answer1":
-            return redirect(url_for("right_answer"))
-        else:
-            return redirect(url_for("wrong_answer"))
+        if request.method == "POST":
+            # when answer is correct
+            if request.form.get("answer") == "correct":
+                flash('Answer is correct!')
+                return redirect(url_for('pregame'))
+
+            elif request.form.get("answer") == "incorrect":
+                flash("Answer is wrong!")
+                return redirect(url_for('pregame'))
+
+
 
 """@app.route("/right_answer", methods = ["GET", "POST"])
 def right_answer():
