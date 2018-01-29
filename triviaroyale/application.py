@@ -7,9 +7,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_login import login_user , logout_user , current_user , login_required
 
-from triviaroyale.helpers import *
-from triviaroyale.api import *
-from triviaroyale.categories import *
+from helpers import *
+from categories import *
 
 # configure application
 app = Flask(__name__)
@@ -31,9 +30,9 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-from triviaroyale.models import User
-from triviaroyale.models import Categories
-from triviaroyale.models import Results
+from models import User
+from models import Categories
+from models import Results
 
 # ensure responses aren't cached
 if app.config["DEBUG"]:
@@ -155,6 +154,8 @@ def pregame():
             # update categories
             Categories.query.get(1).firstcat = randomcategory()
             Categories.query.get(1).secondcat = randomcategory()
+
+            # make sure categories are unique
             while Categories.query.get(1).firstcat == Categories.query.get(1).secondcat:
                 Categories.query.get(1).secondcat = randomcategory()
 
@@ -164,13 +165,8 @@ def pregame():
         cats = Categories.query.get(1)
         return render_template("pregame.html", cats=cats)
 
-<<<<<<< HEAD
 @app.route("/question", methods = ["GET", "POST"])
 def question():
-=======
-@app.route("/questioncat", methods = ["GET", "POST"])
-def questioncat():
->>>>>>> 949b56b5b5a1c7f9a0292254709f73f38024ba1e
     """Let the user answer the trivia question."""
     # 'GET' method
     if request.method == 'GET':
@@ -190,23 +186,18 @@ def questioncat():
             db.session.commit()
 
         else:
-
             Results.query.get(1).question = question
             Results.query.get(1).correct_answer = correct_answer
             Results.query.get(1).incorrect_answer1 = incorrect_answer1
             Results.query.get(1).incorrect_answer2 = incorrect_answer2
             Results.query.get(1).incorrect_answer3 = incorrect_answer3
-
             db.session.commit()
+
         # query for question and results
         vraag = Results.query.get(1)
 
-<<<<<<< HEAD
         return render_template('question.html', vraag=vraag)
 
-=======
-        return render_template('questioncat.html', vraag=vraag)
->>>>>>> 949b56b5b5a1c7f9a0292254709f73f38024ba1e
     # 'POST' method
     else:
         if request.get.form == "answer1":
