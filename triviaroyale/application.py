@@ -130,10 +130,10 @@ def pregame():
     if request.method == "POST":
 
         if request.form["firstcat"] == "category1":
-            return redirect(url_for("questioncat1"))
+            return redirect(url_for("questioncat"))
 
         else:
-            return redirect(url_for("questioncat2"))
+            return redirect(url_for("questioncat"))
 
     # "GET" method
     else:
@@ -164,10 +164,16 @@ def pregame():
         cats = Categories.query.get(1)
         return render_template("pregame.html", cats=cats)
 
+<<<<<<< HEAD
 @app.route("/questioncat1", methods = ["GET", "POST"])
 def questioncat1():
     """Let the user answer the trivia question.
 """
+=======
+@app.route("/questioncat", methods = ["GET", "POST"])
+def questioncat():
+    """Let the user answer the trivia question."""
+>>>>>>> 48975065758706cba267dcfd5eda3febe2993bb2
     # 'GET' method
     if request.method == 'GET':
 
@@ -197,6 +203,7 @@ def questioncat1():
         # query for question and results
         vraag = Results.query.get(1)
 
+<<<<<<< HEAD
         return render_template('questioncat1.html', vraag=vraag)
     # 'POST' method
     else:
@@ -238,6 +245,9 @@ def questioncat2():
         vraag = Results.query.get(1)
 
         return render_template('questioncat2.html', vraag=vraag)
+=======
+        return render_template('questioncat.html', vraag=vraag)
+>>>>>>> 48975065758706cba267dcfd5eda3febe2993bb2
     # 'POST' method
     else:
         if request.get.form == "answer1":
