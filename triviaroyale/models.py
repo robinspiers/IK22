@@ -63,7 +63,7 @@ class Results(db.Model):
     __tablename__ = "results"
     id = db.Column('result_id', db.Integer, primary_key=True)
     question = db.Column('question', db.Text)
-    correct_answer = db.Column('correct answer', db.Text)
+    correct_answer = db.Column('correct_answer', db.Text)
     incorrect_answer1 = db.Column('incorrect_answer1', db.Text)
     incorrect_answer2 = db.Column('incorrect_answer2', db.Text)
     incorrect_answer3 = db.Column('incorrect_answer3', db.Text)
@@ -73,7 +73,7 @@ class Results(db.Model):
         self.correct_answer = correct_answer
         self.question = question
         self.incorrect_answer1 = incorrect_answer1
-        sel.incorrect_answer2 = incorrect_answer2
+        self.incorrect_answer2 = incorrect_answer2
         self.incorrect_answer3 = incorrect_answer3
 
 

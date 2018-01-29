@@ -33,6 +33,7 @@ login_manager.login_view = 'login'
 
 from triviaroyale.models import User
 from triviaroyale.models import Categories
+from triviaroyale.models import Results
 
 # ensure responses aren't cached
 if app.config["DEBUG"]:
@@ -128,23 +129,11 @@ def pregame():
     # "POST" method
     if request.method == "POST":
 
-        if request.method.form["category1"]:
-            return redirect(url_from("questioncat1"))
+        if request.form["firstcat"] == "category1":
+            return redirect(url_for("questioncat1"))
 
-        if request.method.form["category2"]:
-            return redirect(url_from("questioncat2"))
-
-        # get trivia file from online API
-        trivia = getTrivia(request.form.get)
-
-        # create variables
-        results = trivia["results"][0]
-        question = results["question"]
-        correct_answer = results["correct_answer"]
-        incorrect_answer1 = results["incorrect_answers"][0]
-        incorrect_answer2 = results["incorrect_answers"][1]
-        incorrect_answer3 = results["incorrect_answers"][2]
-
+        else:
+            return redirect(url_for("questioncat2"))
 
     # "GET" method
     else:
@@ -166,20 +155,95 @@ def pregame():
             # update categories
             Categories.query.get(1).firstcat = randomcategory()
             Categories.query.get(1).secondcat = randomcategory()
+            while Categories.query.get(1).firstcat == Categories.query.get(1).secondcat:
+                Categories.query.get(1).secondcat = randomcategory()
+
             db.session.commit()
 
         # query for categories
         cats = Categories.query.get(1)
         return render_template("pregame.html", cats=cats)
 
-"""@app.route("/question", method = ["POST"])
-def question():
-    Let the user answer the trivia question.
-    if request.form.get == correct_answer:
-        return redirect(url_from("right_answer"))
-    else:
-        return redirect(url_from("wrong_answer"))
-@app.route("/right_answer", method = ["POST"])
+@app.route("/questioncat1", methods = ["GET", "POST"])
+def questioncat1():
+    """Let the user answer the trivia question."""
+    # 'GET' method
+    if request.method == 'GET':
+
+        # get trivia file from online API
+        trivia = getTrivia(Categories.query.get(1).firstcat)
+
+        # create variables
+        results = trivia["results"][0]
+        question = results["question"]
+        correct_answer = results["correct_answer"]
+        incorrect_answer1 = results["incorrect_answers"][0]
+        incorrect_answer2 = results["incorrect_answers"][1]
+        incorrect_answer3 = results["incorrect_answers"][2]
+
+        # If no question and answer in DB, add them
+        if Results.query.get(1) is None:
+
+            # store question and answers into database
+            result = Results(question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3)
+            db.session.add(result)
+            db.session.commit()
+
+        else:
+
+            Results.query.get(1).question = question
+            Results.query.get(1).correct_answer = correct_answer
+            Results.query.get(1).incorrect_answer1 = incorrect_answer1
+            Results.query.get(1).incorrect_answer2 = incorrect_answer2
+            Results.query.get(1).incorrect_answer3 = incorrect_answer3
+
+            db.session.commit()
+        # query for question and results
+        vraag = Results.query.get(1)
+
+        return render_template('questioncat1.html', vraag=vraag)
+
+@app.route("/questioncat2", methods = ["GET", "POST"])
+def questioncat2():
+    """Let the user answer the trivia question."""
+    # 'GET' method
+    if request.method == 'GET':
+
+        # get trivia file from online API
+        trivia = getTrivia(Categories.query.get(1).secondcat)
+
+        # create variables
+        results = trivia["results"][0]
+        question = results["question"]
+        correct_answer = results["correct_answer"]
+        incorrect_answer1 = results["incorrect_answers"][0]
+        incorrect_answer2 = results["incorrect_answers"][1]
+        incorrect_answer3 = results["incorrect_answers"][2]
+
+        # If no question and answer in DB, add them
+        if Results.query.get(1) is None:
+
+            # store question and answers into database
+            result = Results(question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3)
+            db.session.add(result)
+            db.session.commit()
+
+        else:
+
+            Results.query.get(1).question = question
+            Results.query.get(1).correct_answer = correct_answer
+            Results.query.get(1).incorrect_answer1 = incorrect_answer1
+            Results.query.get(1).incorrect_answer2 = incorrect_answer2
+            Results.query.get(1).incorrect_answer3 = incorrect_answer3
+
+            db.session.commit()
+        # query for question and results
+        vraag = Results.query.get(1)
+
+        return render_template('questioncat2.html', vraag=vraag)
+
+
+"""@app.route("/right_answer", method = ["POST"])
 def right_answer():
     if request.form.get == yes:
         return redirect(url_from("pregame"))
