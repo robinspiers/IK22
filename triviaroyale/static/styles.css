@@ -41,16 +41,16 @@
 }
 
 .navbar-default {
-    background-color: #0511c2 !important;
-    border-color: #414a4c !important;
+    background-color: #000000 !important;
+    border-color: #000000 !important;
     color: #FFFFFF !important;
 }
 
 .table-striped>tbody>tr:nth-child(odd)>td,
 .table-striped>tbody>tr:nth-child(odd)>th
 {
-   background-color: #6700ff !important;
-   border-color:#8a00ff !important;
+   background-color: #000000 !important;
+   border-color: #000000 !important;
 }
 
 main .form-control
