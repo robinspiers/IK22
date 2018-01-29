@@ -7,8 +7,8 @@ import sys
 from flask import redirect, render_template, request, session
 from functools import wraps
 from urllib.request import Request, urlopen
-from triviaroyale.categories import categories
-from triviaroyale.urls import urls
+from categories import categories
+from urls import urls
 
 def login_required(f):
     """
