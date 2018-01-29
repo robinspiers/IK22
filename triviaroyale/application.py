@@ -264,6 +264,7 @@ def right_answer():
             return redirect(url_from("index"))
     else:
         return render_template("right_answer.html")
+
 @app.route("/wrong_answer", methods = ["GET", "POST"])
 def wrong_answer():
     if request.method == 'POST':
