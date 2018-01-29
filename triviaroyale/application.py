@@ -68,7 +68,7 @@ def login():
     username = request.form['username']
     password = request.form['password']
 
-    # opzoeken van gebruiker in Database, waarbij username/password in db gelijk moet zijn aan ingevulde username/password
+    # search user in the database, check if username and password are correct
     registered_user = User.query.filter_by(username=username).first()
 
     if registered_user is None:
@@ -202,6 +202,12 @@ def questioncat1():
         vraag = Results.query.get(1)
 
         return render_template('questioncat1.html', vraag=vraag)
+    # 'POST' method
+    else:
+        if request.get.form == "answer1":
+            return redirect(url_for("right_answer"))
+        else:
+            return redirect(url_for("wrong_answer"))
 
 @app.route("/questioncat2", methods = ["GET", "POST"])
 def questioncat2():
@@ -241,17 +247,28 @@ def questioncat2():
         vraag = Results.query.get(1)
 
         return render_template('questioncat2.html', vraag=vraag)
+    # 'POST' method
+    else:
+        if request.get.form == "answer1":
+            return redirect(url_for("right_answer"))
+        else:
+            return redirect(url_for("wrong_answer"))
 
 
-"""@app.route("/right_answer", method = ["POST"])
+"""@app.route("/right_answer", methods = ["GET", "POST"])
 def right_answer():
-    if request.form.get == yes:
-        return redirect(url_from("pregame"))
+    if request.method == 'POST':
+        if request.form.get == yes:
+            return redirect(url_from("pregame"))
+        elif request.form.get == no:
+            return redirect(url_from("index"))
     else:
-        return redirect(url_from("index"))
-@app.route("/wrong_answer", method = ["POST"])
-def right_answer():
-    if request.form.get == yes:
-        return redirect(url_from("pregame"))
+        return render_template("right_answer.html")
+
+@app.route("/wrong_answer", methods = ["GET", "POST"])
+def wrong_answer():
+    if request.method == 'POST':
+        if request.form.get == Homepage:
+            return redirect(url_from("index"))
     else:
-        return redirect(url_from("index"))"""
+        return render_template("wrong_answer.html")"""

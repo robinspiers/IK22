@@ -5,18 +5,18 @@
 {% endblock %}
 
 {% block main %}
-    <form action="{{ url_for('right_answer') }}" method="get">
+    <form action="{{ url_for('right_answer') }}" method="post">
         <fieldset>
-            <h1>You got it right! Would you like to proceed?</h1>
+            <h1 align="center">You got it right! Would you like to proceed?</h1>
         </fieldset>
     </form>
     <form action="{{ url_for('pregame')  }}" method="get">
         <fieldset>
-            <button type="submit" class="btn btn-succes">Yes!</button>
+            <button type="submit" class="btn btn-succes" value="yes">Yes!</button>
         </fieldset>
     </form>
     <form action="{{ url_for('index')  }}" method="get">
         <fieldset>
-            <button type="submit" class="btn btn-danger">No!</button>
+            <button type="submit" class="btn btn-danger" value="no">No!</button>
         </fieldset>
     </form>
