@@ -238,9 +238,27 @@ def question():
         # correct answer
         if request.form.get("answer") == "correct":
             flash("Answer is correct!")
-            return redirect(url_for('pregame'))
+            return redirect(url_for('proceed'))
 
         # incorrect answer
         elif request.form.get("answer") == "incorrect":
             flash("Answer is wrong!")
-            return redirect(url_for('pregame'))
+            return redirect(url_for('proceed'))
+
+@app.route("/proceed", methods = ["GET", "POST"])
+def proceed():
+    """Allow the user to choose to continue or to stop playing."""
+
+    # "GET" method
+    if request.method == "GET":
+        return render_template("proceed.html")
+
+    # "POST" method
+    else:
+        # if user wants to proceed
+        if request.form.get("submit") == "yes":
+            return redirect(url_from("pregame"))
+
+        # if user wants to return to homepage
+        elif request.form.get("submit") == "no":
+            return redirect(url_from("index"))
