@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Right answer
+{% endblock %}
+
+{% block main %}
+    <form action="{{ url_for('proceed') }}" method="post">
+        <fieldset>
+            <h1 align="center">Would you like to proceed?</h1>
+        </fieldset>
+    </form>
+    <form action="{{ url_for('pregame')  }}" method="get">
+        <fieldset>
+            <button type="submit" name="submit" class="btn btn-succes" value="yes">Yes!</button>
+        </fieldset>
+    </form>
+    <form action="{{ url_for('index')  }}" method="get">
+        <fieldset>
+            <button type="submit" name= "submit" class="btn btn-danger" value="no">No!</button>
+        </fieldset>
+    </form>
+{% endblock %}
