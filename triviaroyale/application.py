@@ -1,0 +1,264 @@
+from cs50 import SQL
+from flask import Flask, g, flash, redirect, render_template, request, session, url_for
+from flask_session import Session
+from passlib.apps import custom_app_context as pwd_context
+from tempfile import mkdtemp
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from flask_login import login_user , logout_user , current_user , login_required
+
+from helpers import *
+
+# configure application
+app = Flask(__name__)
+
+# Flask-SQLAlchemy
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///triviaroyale.db"
+app.config["SQLALCHEMY_ECHO"] = True
+db = SQLAlchemy(app)
+
+# configure session to use filesystem (instead of signed cookies)
+app.config["SESSION_FILE_DIR"] = mkdtemp()
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
+# initialize LoginManager
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+# import classes from models.py
+from models import User
+from models import Categories
+from models import Results
+from models import Choice
+
+# ensure responses are not cached
+if app.config["DEBUG"]:
+    @app.after_request
+    def after_request(response):
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Expires"] = 0
+        response.headers["Pragma"] = "no-cache"
+        return response
+
+# load user from an id
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
+@app.before_request
+def before_request():
+    g.user = current_user
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/login", methods = ["GET", "POST"])
+def login():
+    """Log user in."""
+
+    # "GET" method
+    if request.method == 'GET':
+        return render_template('login.html')
+
+    # "POST" method
+    else:
+        # require user to submit username
+        if not request.form["username"]:
+            flash("Must provide username")
+            return render_template("login.html")
+
+        # require user to submit password
+        elif not request.form["password"]:
+            flash("Must provide password")
+            return render_template("login.html")
+
+        # create variables
+        username = request.form['username']
+        password = request.form['password']
+
+        # search user in the database, check if username and password are correct
+        registered_user = User.query.filter_by(username=username).first()
+
+        if registered_user is None:
+            flash('Username is invalid' , 'error')
+            return render_template('login.html')
+
+        if not pwd_context.verify(password, registered_user.password):
+            flash('Password is invalid' , 'error')
+            return render_template('login.html')
+
+        # keep registered user logged in
+        login_user(registered_user)
+        flash("Logged in successfully")
+        return redirect(request.args.get('next') or url_for('index'))
+
+@app.route("/logout")
+def logout():
+    """Log user out."""
+
+    logout_user()
+    return redirect(url_for("index"))
+
+@app.route("/register", methods = ["GET", "POST"])
+def register():
+    """Register user."""
+
+    # "GET" method
+    if request.method == "GET":
+        return render_template("register.html")
+
+    # "POST" method
+    else:
+        # require user to submit username
+        if not request.form["username"]:
+            flash("Must provide username")
+            return render_template("register.html")
+
+        # require user to submit password
+        elif not request.form["password"]:
+            flash("Must provide password")
+            return render_template("register.html")
+
+        # require user to submit password again
+        elif not request.form["password2"]:
+            flash("Must provide password again")
+            return render_template("register.html")
+
+        # require user to submit identical passwords
+        elif request.form["password"] != request.form["password2"]:
+            flash("Submitted passwords are not identical")
+            return render_template("register.html")
+
+        # add user to database
+        user = User(request.form['username'], request.form['password'], 0)
+        db.session.add(user)
+        db.session.commit()
+        flash("User successfully registered")
+
+        # redirect to homepage
+        return redirect(url_for('login'))
+
+@app.route("/pregame", methods = ["GET", "POST"])
+def pregame():
+    """Let the user choose one out of two random categories."""
+
+    # "GET" method
+    if request.method == "GET":
+
+        # if no categories in database, add them
+        if Categories.query.get(1) is None:
+
+            # generate two different random categories
+            firstcat = randomcategory()
+            secondcat = randomcategory()
+            while firstcat == secondcat:
+                secondcat = randomcategory()
+
+            # update db with new categories
+            randomcats = Categories(firstcat, secondcat)
+            db.session.add(randomcats)
+            db.session.commit()
+
+        # update the table otherwise
+        else:
+            # generate two different random categories
+            Categories.query.get(1).firstcat = randomcategory()
+            Categories.query.get(1).secondcat = randomcategory()
+            while Categories.query.get(1).firstcat == Categories.query.get(1).secondcat:
+                Categories.query.get(1).secondcat = randomcategory()
+            db.session.commit()
+
+        # query for categories
+        cats = Categories.query.get(1)
+        return render_template("pregame.html", cats=cats)
+
+    # "POST" method
+    else:
+        # the first category was chosen
+        if request.form.get("cat") == "1":
+            if Choice.query.get(1) is None:
+                keuze = Choice(Categories.query.get(1).firstcat)
+                db.session.add(keuze)
+                db.session.commit()
+            Choice.query.get(1).choice = Categories.query.get(1).firstcat
+            db.session.commit()
+            return redirect(url_for("question"))
+
+        # the second category was chosen
+        if request.form.get("cat") == "2":
+            if Choice.query.get(1) is None:
+                keuze = Choice(Categories.query.get(1).secondcat)
+                db.session.add(keuze)
+                db.session.commit()
+            Choice.query.get(1).choice = Categories.query.get(1).secondcat
+            db.session.commit()
+            return redirect(url_for("question"))
+
+@app.route("/question", methods = ["GET", "POST"])
+def question():
+    """Let the user answer the trivia question."""
+
+    # "GET" method
+    if request.method == "GET":
+
+        # get trivia file from online API
+        trivia = getTrivia(Choice.query.get(1).choice)
+
+        # create variables
+        question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3 = triviaItems(trivia)
+
+        # if no question and answer in DB, add them
+        if Results.query.get(1) is None:
+
+            # store question and answers into database
+            result = Results(question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3)
+            db.session.add(result)
+            db.session.commit()
+
+        # otherwise update elements
+        else:
+            Results.query.get(1).question = question
+            Results.query.get(1).correct_answer = correct_answer
+            Results.query.get(1).incorrect_answer1 = incorrect_answer1
+            Results.query.get(1).incorrect_answer2 = incorrect_answer2
+            Results.query.get(1).incorrect_answer3 = incorrect_answer3
+            db.session.commit()
+
+        # query for question and results
+        vraag = Results.query.get(1)
+        return render_template('question.html', vraag=vraag)
+
+    # "POST" method
+    else:
+        # correct answer
+        if request.form.get("answer") == "correct":
+            flash("Answer is correct!")
+            return redirect(url_for('proceed'))
+
+        # incorrect answer
+        elif request.form.get("answer") == "incorrect":
+            flash("Answer is wrong!")
+            return redirect(url_for('proceed'))
+
+@app.route("/proceed", methods = ["GET", "POST"])
+def proceed():
+    """Allow the user to choose to continue or to stop playing."""
+
+    # "GET" method
+    if request.method == "GET":
+        return render_template("proceed.html")
+
+    # "POST" method
+    else:
+        # if user wants to proceed
+        if request.form.get("submit") == "yes":
+            return redirect(url_from("pregame"))
+
+        # if user wants to return to homepage
+        elif request.form.get("submit") == "no":
+            return redirect(url_from("index"))
