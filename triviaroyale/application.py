@@ -164,9 +164,16 @@ def pregame():
         cats = Categories.query.get(1)
         return render_template("pregame.html", cats=cats)
 
+<<<<<<< HEAD
+@app.route("/questioncat1", methods = ["GET", "POST"])
+def questioncat1():
+    """Let the user answer the trivia question.
+"""
+=======
 @app.route("/questioncat", methods = ["GET", "POST"])
 def questioncat():
     """Let the user answer the trivia question."""
+>>>>>>> 48975065758706cba267dcfd5eda3febe2993bb2
     # 'GET' method
     if request.method == 'GET':
 
@@ -174,12 +181,7 @@ def questioncat():
         trivia = getTrivia(Categories.query.get(1).firstcat)
 
         # create variables
-        results = trivia["results"][0]
-        question = results["question"]
-        correct_answer = results["correct_answer"]
-        incorrect_answer1 = results["incorrect_answers"][0]
-        incorrect_answer2 = results["incorrect_answers"][1]
-        incorrect_answer3 = results["incorrect_answers"][2]
+        question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3 = triviaItems(trivia)
 
         # If no question and answer in DB, add them
         if Results.query.get(1) is None:
@@ -201,7 +203,51 @@ def questioncat():
         # query for question and results
         vraag = Results.query.get(1)
 
+<<<<<<< HEAD
+        return render_template('questioncat1.html', vraag=vraag)
+    # 'POST' method
+    else:
+        if request.get.form == "answer1":
+            return redirect(url_for("right_answer"))
+        else:
+            return redirect(url_for("wrong_answer"))
+
+@app.route("/questioncat2", methods = ["GET", "POST"])
+def questioncat2():
+    """Let the user answer the trivia question."""
+    # 'GET' method
+    if request.method == 'GET':
+
+        # get trivia file from online API
+        trivia = getTrivia(Categories.query.get(1).secondcat)
+
+        # create variables
+        question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3 = triviaItems(trivia)
+
+        # If no question and answer in DB, add them
+        if Results.query.get(1) is None:
+
+            # store question and answers into database
+            result = Results(question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3)
+            db.session.add(result)
+            db.session.commit()
+
+        else:
+
+            Results.query.get(1).question = question
+            Results.query.get(1).correct_answer = correct_answer
+            Results.query.get(1).incorrect_answer1 = incorrect_answer1
+            Results.query.get(1).incorrect_answer2 = incorrect_answer2
+            Results.query.get(1).incorrect_answer3 = incorrect_answer3
+
+            db.session.commit()
+        # query for question and results
+        vraag = Results.query.get(1)
+
+        return render_template('questioncat2.html', vraag=vraag)
+=======
         return render_template('questioncat.html', vraag=vraag)
+>>>>>>> 48975065758706cba267dcfd5eda3febe2993bb2
     # 'POST' method
     else:
         if request.get.form == "answer1":
