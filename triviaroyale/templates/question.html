@@ -15,9 +15,10 @@
                 <button type="submit" value="answer3" class="btn btn-warning btn-lg btn-block" name="incorrect">{{ vraag.incorrect_answer2 }}</button>
                 <button type="submit" value="answer4" class="btn btn-warning btn-lg btn-block" name="incorrect">{{ vraag.incorrect_answer3 }}</button>
                 <script>
-                    $(document).ready(function(){
-                        $( '.form-group' ).shuffle();
-                    });
+                    var button = document.querySelector('button');
+                    for (var i = button.children.length; i >= 0; i--) {
+                        button.appendChild(button.children[Math.random() * i | 0]);
+                    }
                 </script>
             </div>
         </fieldset>
