@@ -44,3 +44,18 @@ def getTrivia(categoryname):
     r = urlopen(req).read()
     triviafile = json.loads(r.decode('utf-8'))
     return(triviafile)
+
+def fixedquotes(s):
+    for old, new in [("&quot;", "'"), ("&#039;", "'"), ("#ldquo;", "'"), ("#rdquo;", "'"), ("#lsquo;", "'"), ("#rsquo;", "'")]:
+        s = s.replace(old, new)
+    return s
+
+def triviaItems(trivia):
+    # create variables
+    results = trivia["results"][0]
+    question = fixedquotes(results["question"])
+    correct_answer = fixedquotes(results["correct_answer"])
+    incorrect_answer1 = fixedquotes(results["incorrect_answers"][0])
+    incorrect_answer2 = fixedquotes(results["incorrect_answers"][1])
+    incorrect_answer3 = fixedquotes(results["incorrect_answers"][2])
+    return question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3

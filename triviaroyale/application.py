@@ -166,7 +166,8 @@ def pregame():
 
 @app.route("/questioncat1", methods = ["GET", "POST"])
 def questioncat1():
-    """Let the user answer the trivia question."""
+    """Let the user answer the trivia question.
+"""
     # 'GET' method
     if request.method == 'GET':
 
@@ -174,12 +175,7 @@ def questioncat1():
         trivia = getTrivia(Categories.query.get(1).firstcat)
 
         # create variables
-        results = trivia["results"][0]
-        question = results["question"]
-        correct_answer = results["correct_answer"]
-        incorrect_answer1 = results["incorrect_answers"][0]
-        incorrect_answer2 = results["incorrect_answers"][1]
-        incorrect_answer3 = results["incorrect_answers"][2]
+        question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3 = triviaItems(trivia)
 
         # If no question and answer in DB, add them
         if Results.query.get(1) is None:
@@ -219,12 +215,7 @@ def questioncat2():
         trivia = getTrivia(Categories.query.get(1).secondcat)
 
         # create variables
-        results = trivia["results"][0]
-        question = results["question"]
-        correct_answer = results["correct_answer"]
-        incorrect_answer1 = results["incorrect_answers"][0]
-        incorrect_answer2 = results["incorrect_answers"][1]
-        incorrect_answer3 = results["incorrect_answers"][2]
+        question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3 = triviaItems(trivia)
 
         # If no question and answer in DB, add them
         if Results.query.get(1) is None:
@@ -262,6 +253,7 @@ def right_answer():
             return redirect(url_from("pregame"))
         elif request.form.get == no:
             return redirect(url_from("index"))
+
     else:
         return render_template("right_answer.html")
 
