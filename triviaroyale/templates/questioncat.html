@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block main %}
-    <form action="{{ url_for('questioncat1') }}" method="get", "post">
+    <form action="{{ url_for('questioncat') }}" method="get", "post">
         <h1 align="center">{{ vraag.question }}</h1>
-        <br>
+        <br><br>
         <fieldset>
             <div class="form-group">
                 <button type="submit" value="answer1" class="btn btn-warning btn-lg btn-block" name="correct">{{ vraag.correct_answer }}</button>
@@ -16,7 +16,7 @@
                 <button type="submit" value="answer4" class="btn btn-warning btn-lg btn-block" name="incorrect">{{ vraag.incorrect_answer3 }}</button>
                 <script>
                     $(document).ready(function(){
-                        $( '.list label' ).shuffle();
+                        $( '.form-group' ).shuffle();
                     });
                 </script>
             </div>

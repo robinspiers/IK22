@@ -164,10 +164,6 @@ def pregame():
         cats = Categories.query.get(1)
         return render_template("pregame.html", cats=cats)
 
-@app.route("/questioncat1", methods = ["GET", "POST"])
-def questioncat1():
-    """Let the user answer the trivia question."""
-
 @app.route("/questioncat", methods = ["GET", "POST"])
 def questioncat():
     """Let the user answer the trivia question."""
@@ -200,7 +196,7 @@ def questioncat():
         # query for question and results
         vraag = Results.query.get(1)
 
-        return render_template('questioncat1.html', vraag=vraag)
+        return render_template('questioncat.html', vraag=vraag)
     # 'POST' method
     else:
         if request.get.form == "answer1":
