@@ -23,9 +23,7 @@ def login_required(f):
     return decorated_function
 
 def randomcategory():
-    """
-    Get a random category id.
-    """
+    """Get a random category id."""
     # choose random number
     categoryids = [i for i in range(9,33)]
     randomid = random.choice(categoryids)
@@ -39,6 +37,7 @@ def randomcategory():
     return pickedCategory
 
 def getTrivia(categoryname):
+    """Download .json package from online triviadatabase."""
     url = urls[categoryname]
     req = Request(url)
     r = urlopen(req).read()
@@ -51,7 +50,7 @@ def fixedquotes(s):
     return s
 
 def triviaItems(trivia):
-    # create variables
+    """Create usable variables."""
     results = trivia["results"][0]
     question = fixedquotes(results["question"])
     correct_answer = fixedquotes(results["correct_answer"])

@@ -154,6 +154,8 @@ def pregame():
             # update categories
             Categories.query.get(1).firstcat = randomcategory()
             Categories.query.get(1).secondcat = randomcategory()
+
+            # make sure categories are unique
             while Categories.query.get(1).firstcat == Categories.query.get(1).secondcat:
                 Categories.query.get(1).secondcat = randomcategory()
 
@@ -184,14 +186,13 @@ def question():
             db.session.commit()
 
         else:
-
             Results.query.get(1).question = question
             Results.query.get(1).correct_answer = correct_answer
             Results.query.get(1).incorrect_answer1 = incorrect_answer1
             Results.query.get(1).incorrect_answer2 = incorrect_answer2
             Results.query.get(1).incorrect_answer3 = incorrect_answer3
-
             db.session.commit()
+
         # query for question and results
         vraag = Results.query.get(1)
 
