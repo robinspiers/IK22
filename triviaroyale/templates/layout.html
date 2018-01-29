@@ -58,14 +58,14 @@
                         </button>
                         <a class="navbar-brand" href="{{ url_for('index') }}">Trivia Royale</a>
                     </div>
-                    <div class="collapse navbar-collapse" id="nav-content">
+                    <div class="collapse navbar-collapse justify-content-end" id="nav-content">
                         {% if session.user_id %}
-                            <ul class="nav navbar-nav justify-content-start">
+                            <ul class="collapse navbar-collapse justify-content-start">
                                 <li>
                                     <a class="nav-link" href="{{ url_for('pregame') }}">Play!</a>
                                 </li>
                             </ul>
-                            <ul class="nav navbar-nav justify-content-end">
+                            <ul class="collapse navbar-collapse justify-content-end">
                                 <li>
                                     <a class="navbar-item" href="{{ url_for('logout') }}">Log Out</a>
                                 </li>
