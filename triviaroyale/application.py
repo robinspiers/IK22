@@ -33,6 +33,7 @@ login_manager.login_view = 'login'
 from models import User
 from models import Categories
 from models import Results
+from models import Choice
 
 # ensure responses aren't cached
 if app.config["DEBUG"]:
@@ -129,9 +130,13 @@ def pregame():
     if request.method == "POST":
 
         if request.form.get("cat") == "1":
+            Choice.query.get(1).choice = Categories.query.get(1).firstcat
+            db.session.commit()
             return redirect(url_for("question"))
 
         if request.form.get("cat") == "2":
+            Choice.query.get(1).choice = Categories.query.get(1).secondcat
+            db.session.commit()
             return redirect(url_for("question"))
 
     # "GET" method
@@ -172,7 +177,7 @@ def question():
     if request.method == 'GET':
 
         # get trivia file from online API
-        trivia = getTrivia(Categories.query.get(1).firstcat)
+        trivia = getTrivia(Choice.query.get(1).choice)
 
         # create variables
         question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3 = triviaItems(trivia)
