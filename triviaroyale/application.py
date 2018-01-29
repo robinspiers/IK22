@@ -247,11 +247,11 @@ def questioncat2():
 def right_answer():
     if request.form.get == yes:
         return redirect(url_from("pregame"))
-    else:
+    elif request.form.get == no:
         return redirect(url_from("index"))
 @app.route("/wrong_answer", method = ["POST"])
-def right_answer():
-    if request.form.get == yes:
-        return redirect(url_from("pregame"))
+def wrong_answer():
+    if request.form.get == Homepage:
+        return redirect(url_from("index"))
     else:
         return redirect(url_from("index"))"""
