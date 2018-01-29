@@ -1,4 +1,5 @@
-urls = {"General Knowledge": "https://opentdb.com/api.php?amount=1&category=9&type=multiple",
+urls = {"Any Category": "https://opentdb.com/api.php?amount=1&type=multiple",
+        "General Knowledge": "https://opentdb.com/api.php?amount=1&category=9&type=multiple",
         "Entertainment: Books": "https://opentdb.com/api.php?amount=1&category=10&type=multiple",
         "Entertainment: Film": "https://opentdb.com/api.php?amount=1&category=11&type=multiple",
         "Entertainment: Music": "https://opentdb.com/api.php?amount=1&category=12&type=multiple",
