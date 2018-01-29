@@ -76,6 +76,15 @@ class Results(db.Model):
         self.incorrect_answer2 = incorrect_answer2
         self.incorrect_answer3 = incorrect_answer3
 
+class Choice(db.Model):
+    __tablename__ = "choice"
+    id = db.Column('choice_id', db.Integer, primary_key=True)
+    choice = db.Column('choice', db.Text)
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.category_id'))
+
+    def __init__(self, category):
+        self.choice = choice
+
 
 
 
