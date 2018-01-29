@@ -132,7 +132,7 @@ def pregame():
         if request.form["firstcat"] == "category1":
             return redirect(url_for("questioncat1"))
 
-        if request.form["secondcat"] == "category2":
+        else:
             return redirect(url_for("questioncat2"))
 
     # "GET" method
@@ -202,6 +202,45 @@ def questioncat1():
         vraag = Results.query.get(1)
 
         return render_template('questioncat1.html', vraag=vraag)
+
+@app.route("/questioncat2", methods = ["GET", "POST"])
+def questioncat2():
+    """Let the user answer the trivia question."""
+    # 'GET' method
+    if request.method == 'GET':
+
+        # get trivia file from online API
+        trivia = getTrivia(Categories.query.get(1).secondcat)
+
+        # create variables
+        results = trivia["results"][0]
+        question = results["question"]
+        correct_answer = results["correct_answer"]
+        incorrect_answer1 = results["incorrect_answers"][0]
+        incorrect_answer2 = results["incorrect_answers"][1]
+        incorrect_answer3 = results["incorrect_answers"][2]
+
+        # If no question and answer in DB, add them
+        if Results.query.get(1) is None:
+
+            # store question and answers into database
+            result = Results(question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3)
+            db.session.add(result)
+            db.session.commit()
+
+        else:
+
+            Results.query.get(1).question = question
+            Results.query.get(1).correct_answer = correct_answer
+            Results.query.get(1).incorrect_answer1 = incorrect_answer1
+            Results.query.get(1).incorrect_answer2 = incorrect_answer2
+            Results.query.get(1).incorrect_answer3 = incorrect_answer3
+
+            db.session.commit()
+        # query for question and results
+        vraag = Results.query.get(1)
+
+        return render_template('questioncat2.html', vraag=vraag)
 
 
 """@app.route("/right_answer", method = ["POST"])
