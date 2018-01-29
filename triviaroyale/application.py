@@ -235,6 +235,7 @@ def question():
 
     # "POST" method
     else:
+<<<<<<< HEAD
         # correct answer
         if request.form.get("answer") == "correct":
             flash("Answer is correct!")
@@ -244,11 +245,23 @@ def question():
         elif request.form.get("answer") == "incorrect":
             flash("Answer is wrong!")
             return redirect(url_for('proceed'))
+=======
+        if request.method == "POST":
+            # when answer is correct
+            if request.form.get("answer") == "correct":
+                flash('Answer is correct!')
+                return redirect(url_for('proceed'))
+
+            elif request.form.get("answer") == "incorrect":
+                flash("Answer is wrong!")
+                return redirect(url_for('proceed'))
+>>>>>>> 0d833f30583e4b95818a0dea3fc05536d9f07823
 
 @app.route("/proceed", methods = ["GET", "POST"])
 def proceed():
     """Allow the user to choose to continue or to stop playing."""
 
+<<<<<<< HEAD
     # "GET" method
     if request.method == "GET":
         return render_template("proceed.html")
@@ -262,3 +275,14 @@ def proceed():
         # if user wants to return to homepage
         elif request.form.get("submit") == "no":
             return redirect(url_from("index"))
+=======
+@app.route("/proceed", methods = ["GET", "POST"])
+def proceed():
+    if request.method == 'POST':
+        if request.form.get("submit") == "yes":
+            return redirect(url_from("pregame"))
+        elif request.form.get("submit") == "no":
+            return redirect(url_from("index"))
+    else:
+        return render_template("proceed.html")
+>>>>>>> 0d833f30583e4b95818a0dea3fc05536d9f07823
