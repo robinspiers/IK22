@@ -237,7 +237,9 @@ def question():
     else:
         # correct answer
         if request.form.get("answer") == "correct":
-            flash("Answer is correct!")
+            flash("Answer is correct! You've earned 10 points!")
+            User.query.get(current_user.id).highscore += 10
+            db.session.commit()
             return redirect(url_for('proceed'))
 
         # incorrect answer
