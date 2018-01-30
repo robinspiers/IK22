@@ -70,6 +70,7 @@ def login():
 
     # "POST" method
     else:
+
         # require user to submit username
         if not request.form["username"]:
             flash("Must provide username", "warning")
@@ -118,6 +119,7 @@ def register():
 
     # "POST" method
     else:
+
         # require user to submit username
         if not request.form["username"]:
             flash("Must provide username", "warning")
@@ -170,6 +172,7 @@ def pregame():
 
         # update the table otherwise
         else:
+
             # generate two different random categories
             Categories.query.get(1).firstcat = randomcategory()
             Categories.query.get(1).secondcat = randomcategory()
@@ -183,6 +186,7 @@ def pregame():
 
     # "POST" method
     else:
+
         # the first category was chosen
         if request.form.get("cat") == "1":
             if Choice.query.get(1) is None:
@@ -239,17 +243,34 @@ def question():
 
     # "POST" method
     else:
-        # correct answer
-        if request.form.get("answer") == "correct":
-            flash("Answer is correct! You have earned 10 points!", "success")
-            User.query.get(current_user.id).highscore += 10
-            db.session.commit()
-            return redirect(url_for("proceed"))
 
-        # incorrect answer
-        elif request.form.get("answer") == "incorrect":
-            flash("Answer is wrong! Your score has been reset to 0.", "danger")
-            return redirect(url_for("proceed"))
+        # if user is not logged in
+        if session.get("user_id") == None:
+
+            # correct answer
+            if request.form.get("answer") == "correct":
+                flash("Answer is correct!", "success")
+                return redirect(url_for("proceed"))
+
+            # incorrect answer
+            elif request.form.get("answer") == "incorrect":
+                flash("Answer is wrong!", "danger")
+                return redirect(url_for("proceed"))
+
+        # if user is logged in
+        else:
+
+            # correct answer
+            if request.form.get("answer") == "correct":
+                flash("Answer is correct! You have earned 10 points!", "success")
+                User.query.get(current_user.id).highscore += 10
+                db.session.commit()
+                return redirect(url_for("proceed"))
+
+            # incorrect answer
+            elif request.form.get("answer") == "incorrect":
+                flash("Answer is wrong! Your score has been reset to 0.", "danger")
+                return redirect(url_for("proceed"))
 
 @app.route("/proceed", methods = ["GET", "POST"])
 def proceed():
@@ -261,6 +282,7 @@ def proceed():
 
     # "POST" method
     else:
+
         # if user wants to proceed
         if request.form.get("submit") == "yes":
             return redirect(url_from("pregame"))
