@@ -23,16 +23,6 @@
     color: #FFFFFF !important;
 }
 
-.navbar-default .navbar-brand > li{
-  margin-left: 30px !important;
-  margin-right: 30px !important;
-}
-
-.navbar-default .navbar-brand > li{
-  padding-left: 30px !important;
-  padding-right: 30px !important;
-}
-
 .table-borderless td,
 .table-borderless th {
     border: none !important;

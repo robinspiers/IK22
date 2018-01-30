@@ -55,6 +55,8 @@ def before_request():
 
 @app.route("/")
 def index():
+    """Homepage of the website, features the high scores leaderboard."""
+
     rows = User.query.all()
     return render_template("index.html", users=rows)
 
@@ -103,6 +105,7 @@ def logout():
     """Log user out."""
 
     logout_user()
+    flash("Logged out successfully", "info")
     return redirect(url_for("index"))
 
 @app.route("/register", methods = ["GET", "POST"])
@@ -238,14 +241,14 @@ def question():
     else:
         # correct answer
         if request.form.get("answer") == "correct":
-            flash("Answer is correct! You've earned 10 points!", "success")
+            flash("Answer is correct! You have earned 10 points!", "success")
             User.query.get(current_user.id).highscore += 10
             db.session.commit()
             return redirect(url_for("proceed"))
 
         # incorrect answer
         elif request.form.get("answer") == "incorrect":
-            flash("Answer is wrong!", "danger")
+            flash("Answer is wrong! Your score has been reset to 0.", "danger")
             return redirect(url_for("proceed"))
 
 @app.route("/proceed", methods = ["GET", "POST"])
