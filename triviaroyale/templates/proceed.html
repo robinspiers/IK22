@@ -11,13 +11,13 @@
         </fieldset>
     </form>
     <form action="{{ url_for('pregame')  }}" method="get">
-        <fieldset>
+        <div class="col-md-4 text-center">
             <button type="submit" name="submit" class="btn btn-succes" value="yes">Yes!</button>
-        </fieldset>
+        </div>
     </form>
     <form action="{{ url_for('index')  }}" method="get">
-        <fieldset>
+        <div class="col-md-4 text-center">
             <button type="submit" name= "submit" class="btn btn-danger" value="no">No!</button>
-        </fieldset>
+        </div>
     </form>
 {% endblock %}

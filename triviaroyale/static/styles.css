@@ -1,8 +1,8 @@
 .container
 {
     /* center contents */
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 30px !important;
+    margin-right: 30px !important;
     text-align: center;
 }
 
@@ -33,11 +33,10 @@
   padding-right: 30px !important;
 }
 
-.table-striped>tbody>tr:nth-child(odd)>td,
-.table-striped>tbody>tr:nth-child(odd)>th
-{
-   background-color: #000000 !important;
-   border-color: #000000 !important;
+.table-borderless td,
+.table-borderless th {
+    border: none !important;
+    background-color: #000000 !important;
 }
 
 main .form-control

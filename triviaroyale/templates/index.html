@@ -15,9 +15,11 @@
       <th>Points</th>
     </tr>
     </thead>
+  {% for user in users %}
     <tr>
-      <td>a </td>
-      <td>b </td>
+      <td>{{ user.username }}</td>
+      <td>{{ user.highscore}} </td>
     </tr>
+  {% endfor %}
   </table>
 {% endblock %}

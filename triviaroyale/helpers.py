@@ -46,7 +46,7 @@ def getTrivia(categoryname):
 
 def fixedquotes(s):
     for old, new in [("&quot;", "'"), ("&#039;", "'"), ("#LDQUO;", "'"), ("#RDQUO;", "'"), ("#LSQUO;", "'"), \
-                     ("#RSQUO;", "'"), ("&amp;", "&"), ("&lt;", "<"), ("&rt;", ">")]:
+                    ("#RSQUO;", "'"), ("&amp;", "&"), ("&lt;", "<"), ("&rt;", ">")]:
         s = s.replace(old, new)
     return s
 
