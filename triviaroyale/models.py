@@ -15,15 +15,17 @@ class User(db.Model):
     username = db.Column('username', db.Text, unique=True, index=True)
     password = db.Column('password', db.Text)
     highscore = db.Column('highscore', db.Integer)
+    currentscore = db.Column('currentscore', db.Integer)
     todos = db.relationship('Todo' , backref='user',lazy='dynamic')
     catergories = db.relationship('Categories', backref = 'user', lazy = 'dynamic')
     results = db.relationship('Results', backref = 'user', lazy = 'dynamic')
 
 
-    def __init__(self, username, password, highscore):
+    def __init__(self, username, password, highscore, currentscore):
         self.username = username
         self.password = pwd_context.hash(password)
         self.highscore = highscore
+        self.currentscore = currentscore
 
     def is_authenticated(self):
         return True

@@ -141,7 +141,7 @@ def register():
             return render_template("register.html")
 
         # add user to database
-        user = User(request.form['username'], request.form['password'], 0)
+        user = User(request.form['username'], request.form['password'], 0, 0)
         db.session.add(user)
         db.session.commit()
         flash("User successfully registered", "info")
@@ -263,13 +263,17 @@ def question():
             # correct answer
             if request.form.get("answer") == "correct":
                 flash("Answer is correct! You have earned 10 points!", "success")
-                User.query.get(current_user.id).highscore += 10
+                User.query.get(current_user.id).currentscore += 10
+                if User.query.get(current_user.id).currentscore > User.query.get(current_user.id).highscore:
+                    User.query.get(current_user.id).highscore += 10
                 db.session.commit()
                 return redirect(url_for("proceed"))
 
             # incorrect answer
             elif request.form.get("answer") == "incorrect":
                 flash("Answer is wrong! Your score has been reset to 0.", "danger")
+                User.query.get(current_user.id).currentscore = 0
+                db.session.commit()
                 return redirect(url_for("proceed"))
 
 @app.route("/proceed", methods = ["GET", "POST"])
