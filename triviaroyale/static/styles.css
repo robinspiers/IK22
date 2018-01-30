@@ -11,30 +11,7 @@
 {
     color: #FFFFFF;
 }
-.navbar-default .navbar-brand .babyblue1
-{
-    color: #00a8ff;
-}
-.navbar-default .navbar-brand .babyblue2
-{
-    color: #0097e6;
-}
-.navbar-default .navbar-brand .blue1
-{
-    color: #487eb0;
-}
-.navbar-default .navbar-brand .blue2
-{
-    color: #40739e;
-}
-.navbar-default .navbar-brand .navyblue1
-{
-    color: #273c75;
-}
-.navbar-default .navbar-brand .navyblue2
-{
-    color: #192a56;
-}
+
 .navbar-default .navbar-text
 {
     color: 	#FFFAF0;
@@ -44,6 +21,16 @@
     background-color: #000000 !important;
     border-color: #000000 !important;
     color: #FFFFFF !important;
+}
+
+.navbar-default .navbar-brand > li{
+  margin-left: 30px !important;
+  margin-right: 30px !important;
+}
+
+.navbar-default .navbar-brand > li{
+  padding-left: 30px !important;
+  padding-right: 30px !important;
 }
 
 .table-striped>tbody>tr:nth-child(odd)>td,

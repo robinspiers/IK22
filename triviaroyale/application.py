@@ -27,7 +27,7 @@ Session(app)
 # initialize LoginManager
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'login'
+login_manager.login_view = "login"
 
 # import classes from models.py
 from models import User
@@ -63,18 +63,18 @@ def login():
 
     # "GET" method
     if request.method == 'GET':
-        return render_template('login.html')
+        return render_template("login.html")
 
     # "POST" method
     else:
         # require user to submit username
         if not request.form["username"]:
-            flash("Must provide username")
+            flash("Must provide username", "warning")
             return render_template("login.html")
 
         # require user to submit password
         elif not request.form["password"]:
-            flash("Must provide password")
+            flash("Must provide password", "warning")
             return render_template("login.html")
 
         # create variables
@@ -85,16 +85,16 @@ def login():
         registered_user = User.query.filter_by(username=username).first()
 
         if registered_user is None:
-            flash('Username is invalid' , 'error')
+            flash("Username is invalid" , "warning")
             return render_template('login.html')
 
         if not pwd_context.verify(password, registered_user.password):
-            flash('Password is invalid' , 'error')
+            flash("Password is invalid" , "warning")
             return render_template('login.html')
 
         # keep registered user logged in
         login_user(registered_user)
-        flash("Logged in successfully")
+        flash("Logged in successfully", "info")
         return redirect(request.args.get('next') or url_for('index'))
 
 @app.route("/logout")
@@ -116,29 +116,29 @@ def register():
     else:
         # require user to submit username
         if not request.form["username"]:
-            flash("Must provide username")
+            flash("Must provide username", "warning")
             return render_template("register.html")
 
         # require user to submit password
         elif not request.form["password"]:
-            flash("Must provide password")
+            flash("Must provide password", "warning")
             return render_template("register.html")
 
         # require user to submit password again
         elif not request.form["password2"]:
-            flash("Must provide password again")
+            flash("Must provide password again", "warning")
             return render_template("register.html")
 
         # require user to submit identical passwords
         elif request.form["password"] != request.form["password2"]:
-            flash("Submitted passwords are not identical")
+            flash("Submitted passwords are not identical", "warning")
             return render_template("register.html")
 
         # add user to database
         user = User(request.form['username'], request.form['password'], 0)
         db.session.add(user)
         db.session.commit()
-        flash("User successfully registered")
+        flash("User successfully registered", "info")
 
         # redirect to homepage
         return redirect(url_for('login'))
@@ -237,15 +237,15 @@ def question():
     else:
         # correct answer
         if request.form.get("answer") == "correct":
-            flash("Answer is correct! You've earned 10 points!")
+            flash("Answer is correct! You've earned 10 points!", "success")
             User.query.get(current_user.id).highscore += 10
             db.session.commit()
-            return redirect(url_for('proceed'))
+            return redirect(url_for("proceed"))
 
         # incorrect answer
         elif request.form.get("answer") == "incorrect":
-            flash("Answer is wrong!")
-            return redirect(url_for('proceed'))
+            flash("Answer is wrong!", "danger")
+            return redirect(url_for("proceed"))
 
 @app.route("/proceed", methods = ["GET", "POST"])
 def proceed():
