@@ -55,7 +55,8 @@ def before_request():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    rows = User.query.all()
+    return render_template("index.html", users=rows)
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
