@@ -66,7 +66,7 @@ def login():
     """Log user in."""
 
     # "GET" method
-    if request.method == 'GET':
+    if request.method == "GET":
         return render_template("login.html")
 
     # "POST" method
