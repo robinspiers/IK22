@@ -8,20 +8,22 @@
 
 {% block main %}
   <h1>High Scores</h1>
-  <table class="table table-borderless" style="width:100%">
-    <thead>
-    <tr>
-      <th>Rank</th>
-      <th>Player</th>
-      <th>Points</th>
-    </tr>
-    </thead>
-  {% for user in users %}
-    <tr>
-      <td>0</td>
-      <td>{{ user.username }}</td>
-      <td>{{ user.highscore }} </td>
-    </tr>
-  {% endfor %}
-  </table>
+  <div class="table responsive">
+    <table id="High Scores" class="table table-borderless" style="width:100%">
+      <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Player</th>
+        <th>Points</th>
+      </tr>
+      </thead>
+    {% for user in users %}
+      <tr>
+        <td>0</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.highscore }} </td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
 {% endblock %}
