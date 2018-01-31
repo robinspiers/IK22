@@ -19,8 +19,8 @@ Voor de echte liefhebbers gebruiken wij een thema geïnspireerd door de klassiek
 * Na het beantwoorden van een vraag krijg je het juiste antwoord en je huidige score te zien. Daarnaast kun je kiezen of je door wil spelne of juist wil terugkeren naar de homepagina.
 * Ook niet-ingelogde gebruikers kunnen het spel spelen, hierbij worden geen gegevens opgeslagen.
 
-![question](doc/question.jpg)
-![proceed](doc/proceed.jpg)
+![question](doc/question.png)
+![proceed](doc/proceed.png)
 
 ### Organisatie
 We hebben ons niet echt aan een stricte planning gehouden, maar meer gewerkt in de vorm van een simpele structuur met verschillende energie-pieken.
