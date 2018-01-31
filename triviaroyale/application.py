@@ -57,7 +57,7 @@ def before_request():
 def index():
     """Homepage of the website, features the high scores leaderboard."""
 
-    rows = User.query.all()
+    rows = User.query.order_by(User.highscore.desc())
     return render_template("index.html", users=rows)
 
 @app.route("/login", methods = ["GET", "POST"])
