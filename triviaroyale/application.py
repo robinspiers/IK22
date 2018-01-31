@@ -285,14 +285,14 @@ def question():
                 if User.query.get(current_user.id).currentscore > User.query.get(current_user.id).highscore:
                     User.query.get(current_user.id).highscore += 10
                 db.session.commit()
-                return redirect(url_for("proceed"))
+                return redirect(url_for("proceed_online"))
 
             # incorrect answer
             else:
                 flash("Answer is wrong! Your score has been reset to 0.", "danger")
                 User.query.get(current_user.id).currentscore = 0
                 db.session.commit()
-                return redirect(url_for("proceed"))
+                return redirect(url_for("proceed_online"))
 
 @app.route("/proceed", methods = ["GET", "POST"])
 def proceed():
@@ -300,8 +300,27 @@ def proceed():
 
     # "GET" method
     if request.method == "GET":
+        return render_template("proceed.html")
+
+    # "POST" method
+    else:
+
+        # if user wants to proceed
+        if request.form.get("submit") == "yes":
+            return redirect(url_from("pregame"))
+
+        # if user wants to return to homepage
+        elif request.form.get("submit") == "no":
+            return redirect(url_from("index"))
+
+@app.route("/proceed_online", methods = ["GET", "POST"])
+def proceed_online():
+    """Allow the logged in user to choose to continue or to stop playing. Also show the user's current score."""
+
+    # "GET" method
+    if request.method == "GET":
         score = User.query.get(current_user.id).currentscore
-        return render_template("proceed.html", score=score)
+        return render_template("proceed_online.html", score=score)
 
     # "POST" method
     else:

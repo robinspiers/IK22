@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-    <form action="{{ url_for('proceed') }}" method="post">
+    <form action="{{ url_for('proceed_online') }}" method="post">
         <fieldset>
             <h1 align="center">Would you like to proceed?</h1>
             <br><br>
@@ -21,4 +21,7 @@
             <button type="submit" name= "submit" class="btn btn-danger btn-lg btn-block" value="no">No! Return to homepage.</button>
         </div>
     </form>
+    <fieldset>
+        <h3 align="center">Current Score: {{ score }}</h3>
+    </fieldset>
 {% endblock %}
