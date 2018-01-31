@@ -105,6 +105,8 @@ def login():
 def logout():
     """Log user out."""
 
+    User.query.get(current_user.id).currentscore = 0
+    db.session.commit()
     logout_user()
     flash("Logged out successfully", "info")
     return redirect(url_for("index"))
