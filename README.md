@@ -1,4 +1,4 @@
-# Trivia Royale
+# Webdb IK: Trivia Royale
 ## Groep IK22: Justin Mensah, Timo Rossenaar en Robin Spiers
 
 ### Samenvatting
@@ -12,6 +12,8 @@ Voor de echte liefhebbers gebruiken wij een thema geïnspireerd door de klassiek
 * Een account registeren
 * Inloggen bij een account
 * Naar het triviaspel gaan
+
+![index](doc/index.png)
 
 #### Het triviaspel:
 * Eerst kom je bij het pre-game scherm, waar je uit een van de twee willekeurige categoriën kan kiezen
