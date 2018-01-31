@@ -57,6 +57,7 @@ def before_request():
 def index():
     """Homepage of the website, features the high scores leaderboard."""
 
+    # order high scores from highest to lowest
     rows = User.query.order_by(User.highscore.desc())
     return render_template("index.html", users=rows)
 
@@ -82,24 +83,24 @@ def login():
             return render_template("login.html")
 
         # create variables
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form["username"]
+        password = request.form["password"]
 
         # search user in the database, check if username and password are correct
         registered_user = User.query.filter_by(username=username).first()
 
         if registered_user is None:
             flash("Username is invalid" , "warning")
-            return render_template('login.html')
+            return render_template("login.html")
 
         if not pwd_context.verify(password, registered_user.password):
             flash("Password is invalid" , "warning")
-            return render_template('login.html')
+            return render_template("login.html")
 
-        # keep registered user logged in
+        # keep user logged in
         login_user(registered_user)
         flash("Logged in successfully", "info")
-        return redirect(request.args.get('next') or url_for('index'))
+        return redirect(url_for("index"))
 
 @app.route("/logout")
 def logout():
@@ -143,13 +144,13 @@ def register():
             return render_template("register.html")
 
         # add user to database
-        user = User(request.form['username'], request.form['password'], 0, 0)
+        user = User(request.form["username"], request.form["password"], 0, 0)
         db.session.add(user)
         db.session.commit()
         flash("User successfully registered", "info")
 
-        # redirect to homepage
-        return redirect(url_for('login'))
+        # redirect to login page
+        return redirect(url_for("login"))
 
 @app.route("/pregame", methods = ["GET", "POST"])
 def pregame():
@@ -158,7 +159,7 @@ def pregame():
     # "GET" method
     if request.method == "GET":
 
-        # if no categories in database, add them
+        # if table is empty, insert values
         if Categories.query.get(1) is None:
 
             # generate two different random categories
@@ -167,7 +168,7 @@ def pregame():
             while firstcat == secondcat:
                 secondcat = randomcategory()
 
-            # update db with new categories
+            # update database with new categories
             randomcats = Categories(firstcat, secondcat)
             db.session.add(randomcats)
             db.session.commit()
@@ -189,7 +190,7 @@ def pregame():
     # "POST" method
     else:
 
-        # the first category was chosen
+        # if the first category was chosen
         if request.form.get("cat") == "1":
             if Choice.query.get(1) is None:
                 keuze = Choice(Categories.query.get(1).firstcat)
@@ -199,7 +200,7 @@ def pregame():
             db.session.commit()
             return redirect(url_for("question"))
 
-        # the second category was chosen
+        # if the second category was chosen
         if request.form.get("cat") == "2":
             if Choice.query.get(1) is None:
                 keuze = Choice(Categories.query.get(1).secondcat)
@@ -217,15 +218,15 @@ def question():
     if request.method == "GET":
 
         # get trivia file from online API
-        trivia = getTrivia(Choice.query.get(1).choice)
+        triviafile = getTrivia(Choice.query.get(1).choice)
 
         # create variables
-        question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3 = triviaItems(trivia)
+        question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3 = triviaItems(triviafile)
 
         # create shuffable variables for db
         answer1, answer2, answer3, answer4 = shuffle(correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3)
 
-        # if no question and answer in DB, add them
+        # if table is empty, insert values
         if Results.query.get(1) is None:
 
             # store question and answers into database
@@ -233,7 +234,7 @@ def question():
             db.session.add(result)
             db.session.commit()
 
-        # otherwise update elements
+        # update the table otherwise
         else:
             Results.query.get(1).question = question
             Results.query.get(1).answer1 = answer1
@@ -241,12 +242,11 @@ def question():
             Results.query.get(1).answer3 = answer3
             Results.query.get(1).answer4 = answer4
             Results.query.get(1).correct_answer = correct_answer
-
             db.session.commit()
 
         # query for question and results
-        vraag = Results.query.get(1)
-        return render_template('question.html', vraag=vraag)
+        trivia = Results.query.get(1)
+        return render_template('question.html', trivia=trivia)
 
     # "POST" method
     else:
@@ -281,16 +281,24 @@ def question():
             # correct answer
             if answerdict[request.form.get("answer")] == "correct":
                 flash("Answer is correct! You have earned 10 points!", "success")
+
+                # add 10 points to user's current score
                 User.query.get(current_user.id).currentscore += 10
+
+                # update high score if broken
                 if User.query.get(current_user.id).currentscore > User.query.get(current_user.id).highscore:
                     User.query.get(current_user.id).highscore += 10
+
                 db.session.commit()
                 return redirect(url_for("proceed_online"))
 
             # incorrect answer
             else:
                 flash("Answer is wrong! Your score has been reset to 0.", "danger")
+
+                # reset current score to 0
                 User.query.get(current_user.id).currentscore = 0
+
                 db.session.commit()
                 return redirect(url_for("proceed_online"))
 
@@ -300,6 +308,8 @@ def proceed():
 
     # "GET" method
     if request.method == "GET":
+
+        # show correct answer
         answer = Results.query.get(1).correct_answer
         return render_template("proceed.html", answer=answer)
 
@@ -320,8 +330,13 @@ def proceed_online():
 
     # "GET" method
     if request.method == "GET":
+
+        # show correct answer
         answer = Results.query.get(1).correct_answer
+
+        # show user's current score
         score = User.query.get(current_user.id).currentscore
+
         return render_template("proceed_online.html", score=score, answer=answer)
 
     # "POST" method

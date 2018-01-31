@@ -7,14 +7,14 @@
 {% block main %}
     <h2>No Easter Eggs here, go away.</h2>
     <form action="{{ url_for('question') }}" method="post">
-        <h1>{{ vraag.question }}</h1>
+        <h1>{{ trivia.question }}</h1>
         <br><br>
         <fieldset>
             <div class="form-group">
-                <button type="submit" value="answer1" class="btn btn-warning btn-lg btn-block" name="answer">{{ vraag.answer1 }}</button>
-                <button type="submit" value="answer2" class="btn btn-warning btn-lg btn-block" name="answer">{{ vraag.answer2 }}</button>
-                <button type="submit" value="answer3" class="btn btn-warning btn-lg btn-block" name="answer">{{ vraag.answer3 }}</button>
-                <button type="submit" value="answer4" class="btn btn-warning btn-lg btn-block" name="answer">{{ vraag.answer4 }}</button>
+                <button type="submit" value="answer1" class="btn btn-warning btn-lg btn-block" name="answer">{{ trivia.answer1 }}</button>
+                <button type="submit" value="answer2" class="btn btn-warning btn-lg btn-block" name="answer">{{ trivia.answer2 }}</button>
+                <button type="submit" value="answer3" class="btn btn-warning btn-lg btn-block" name="answer">{{ trivia.answer3 }}</button>
+                <button type="submit" value="answer4" class="btn btn-warning btn-lg btn-block" name="answer">{{ trivia.answer4 }}</button>
             </div>
         </fieldset>
     </form>
