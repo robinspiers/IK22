@@ -12,18 +12,18 @@
         <h3 align="center">Current Score: {{ score }}</h3>
     </fieldset>
     <h2>No Easter Eggs here, go away.</h2>
-    <form action="{{ url_for('proceed_online') }}" method="post">
+    <form action="{{ url_for('proceed_online') }}" method="POST">
         <fieldset>
             <h1>Would you like to proceed?</h1>
             <br><br>
         </fieldset>
     </form>
-    <form action="{{ url_for('pregame')  }}" method="get">
+    <form action="{{ url_for('pregame')  }}" method="GET">
         <div class="form-group">
             <button type="submit" name="submit" class="btn btn-success btn-lg btn-block" value="yes">Yes! Next Question!</button>
         </div>
     </form>
-    <form action="{{ url_for('index')  }}" method="get">
+    <form action="{{ url_for('index')  }}" method="GET">
         <div class="form-group">
             <button type="submit" name= "submit" class="btn btn-danger btn-lg btn-block" value="no">No! Return to homepage.</button>
         </div>
