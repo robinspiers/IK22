@@ -8,6 +8,9 @@
     <fieldset>
         <h3 align="center">Correct Answer: {{ answer }}</h3>
     </fieldset>
+    <fieldset>
+        <h3 align="center">Current Score: {{ score }}</h3>
+    </fieldset>
     <h2>No Easter Eggs here, go away.</h2>
     <form action="{{ url_for('proceed_online') }}" method="post">
         <fieldset>
@@ -25,9 +28,4 @@
             <button type="submit" name= "submit" class="btn btn-danger btn-lg btn-block" value="no">No! Return to homepage.</button>
         </div>
     </form>
-    <h2>No Easter Eggs here, go away.</h2>
-    <h2>No Easter Eggs here, go away.</h2>
-    <fieldset>
-        <h3 align="center">Current Score: {{ score }}</h3>
-    </fieldset>
 {% endblock %}
