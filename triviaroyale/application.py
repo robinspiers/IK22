@@ -105,6 +105,8 @@ def login():
 def logout():
     """Log user out."""
 
+    User.query.get(current_user.id).currentscore = 0
+    db.session.commit()
     logout_user()
     flash("Logged out successfully", "info")
     return redirect(url_for("index"))
@@ -220,21 +222,26 @@ def question():
         # create variables
         question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3 = triviaItems(trivia)
 
+        # create shuffable variables for db
+        answer1, answer2, answer3, answer4 = shuffle(correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3)
+
         # if no question and answer in DB, add them
         if Results.query.get(1) is None:
 
             # store question and answers into database
-            result = Results(question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3)
+            result = Results(question, answer1, answer2, answer3, answer4, correct_answer)
             db.session.add(result)
             db.session.commit()
 
         # otherwise update elements
         else:
             Results.query.get(1).question = question
+            Results.query.get(1).answer1 = answer1
+            Results.query.get(1).answer2 = answer2
+            Results.query.get(1).answer3 = answer3
+            Results.query.get(1).answer4 = answer4
             Results.query.get(1).correct_answer = correct_answer
-            Results.query.get(1).incorrect_answer1 = incorrect_answer1
-            Results.query.get(1).incorrect_answer2 = incorrect_answer2
-            Results.query.get(1).incorrect_answer3 = incorrect_answer3
+
             db.session.commit()
 
         # query for question and results
@@ -244,16 +251,27 @@ def question():
     # "POST" method
     else:
 
+        # create dictionary with correct answer and incorrect answers
+        answerdict = {"answer1" : "incorrect", "answer2" : "incorrect", "answer3" : "incorrect", "answer4" : "incorrect"}
+        if Results.query.get(1).correct_answer == Results.query.get(1).answer1:
+            answerdict["answer1"] = "correct"
+        elif Results.query.get(1).correct_answer == Results.query.get(1).answer2:
+            answerdict["answer2"] = "correct"
+        elif Results.query.get(1).correct_answer == Results.query.get(1).answer3:
+            answerdict["answer3"] = "correct"
+        elif Results.query.get(1).correct_answer == Results.query.get(1).answer4:
+            answerdict["answer4"] = "correct"
+
         # if user is not logged in
         if session.get("user_id") == None:
 
             # correct answer
-            if request.form.get("answer") == "correct":
+            if answerdict[request.form.get("answer")] == "correct":
                 flash("Answer is correct!", "success")
                 return redirect(url_for("proceed"))
 
             # incorrect answer
-            elif request.form.get("answer") == "incorrect":
+            else:
                 flash("Answer is wrong!", "danger")
                 return redirect(url_for("proceed"))
 
@@ -261,7 +279,7 @@ def question():
         else:
 
             # correct answer
-            if request.form.get("answer") == "correct":
+            if answerdict[request.form.get("answer")] == "correct":
                 flash("Answer is correct! You have earned 10 points!", "success")
                 User.query.get(current_user.id).currentscore += 10
                 if User.query.get(current_user.id).currentscore > User.query.get(current_user.id).highscore:
@@ -270,7 +288,7 @@ def question():
                 return redirect(url_for("proceed"))
 
             # incorrect answer
-            elif request.form.get("answer") == "incorrect":
+            else:
                 flash("Answer is wrong! Your score has been reset to 0.", "danger")
                 User.query.get(current_user.id).currentscore = 0
                 db.session.commit()

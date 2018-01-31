@@ -65,18 +65,20 @@ class Results(db.Model):
     __tablename__ = "results"
     id = db.Column('result_id', db.Integer, primary_key=True)
     question = db.Column('question', db.Text)
+    answer1 = db.Column('answer1', db.Text)
+    answer2 = db.Column('answer2', db.Text)
+    answer3 = db.Column('answer3', db.Text)
+    answer4 = db.Column('answer4', db.Text)
     correct_answer = db.Column('correct_answer', db.Text)
-    incorrect_answer1 = db.Column('incorrect_answer1', db.Text)
-    incorrect_answer2 = db.Column('incorrect_answer2', db.Text)
-    incorrect_answer3 = db.Column('incorrect_answer3', db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
-    def __init__(self, question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3):
-        self.correct_answer = correct_answer
+    def __init__(self, question, answer1, answer2, answer3, answer4, correct_answer):
         self.question = question
-        self.incorrect_answer1 = incorrect_answer1
-        self.incorrect_answer2 = incorrect_answer2
-        self.incorrect_answer3 = incorrect_answer3
+        self.answer1 = answer1
+        self.answer2 = answer2
+        self.answer3 = answer3
+        self.answer4 = answer4
+        self.correct_answer = correct_answer
 
 class Choice(db.Model):
     __tablename__ = "choice"

@@ -59,3 +59,10 @@ def triviaItems(trivia):
     incorrect_answer2 = fixedquotes(results["incorrect_answers"][1])
     incorrect_answer3 = fixedquotes(results["incorrect_answers"][2])
     return question, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3
+
+def shuffle(answer1, answer2, answer3, answer4):
+    """Shuffles the four answers."""
+
+    answers = [answer1, answer2, answer3, answer4]
+    random.shuffle(answers)
+    return answers[0], answers[1], answers[2], answers[3]
