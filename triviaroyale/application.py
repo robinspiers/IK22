@@ -300,7 +300,8 @@ def proceed():
 
     # "GET" method
     if request.method == "GET":
-        return render_template("proceed.html")
+        answer = Results.query.get(1).correct_answer
+        return render_template("proceed.html", answer=answer)
 
     # "POST" method
     else:
@@ -319,8 +320,9 @@ def proceed_online():
 
     # "GET" method
     if request.method == "GET":
+        answer = Results.query.get(1).correct_answer
         score = User.query.get(current_user.id).currentscore
-        return render_template("proceed_online.html", score=score)
+        return render_template("proceed_online.html", score=score, answer=answer)
 
     # "POST" method
     else:
