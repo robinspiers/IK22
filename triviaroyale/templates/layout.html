@@ -66,7 +66,7 @@
                         {% if session.user_id %}
                             <ul class="nav navbar-nav navbar.justify-content-end">
                                 <li>
-                                    <a class="nav-item" href="{{ url_for('pregame') }}">Play!</a>
+                                    <a class="nav-item" href="{{ url_for('pregame') }}">Play!...</a>
                                 </li>
                             </ul>
                             <ul class="nav navbar-nav navbar.justify-content-end">
@@ -77,10 +77,10 @@
                         {% else %}
                             <ul class="nav navbar-nav navbar.justify-content-end">
                                 <li>
-                                    <a class="navbar-item" href="{{ url_for('pregame') }}">Play!</a>
+                                    <a class="navbar-item" href="{{ url_for('pregame') }}">Play!...</a>
                                 </li>
                                 <li>
-                                    <a class="navbar-item" href="{{ url_for('register') }}">Register</a>
+                                    <a class="navbar-item" href="{{ url_for('register') }}">Register...</a>
                                 </li>
                                 <li>
                                     <a class="navbar-item" href="{{ url_for('login') }}">Log In</a>
