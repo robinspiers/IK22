@@ -300,7 +300,8 @@ def proceed():
 
     # "GET" method
     if request.method == "GET":
-        return render_template("proceed.html")
+        score = User.query.get(current_user.id).currentscore
+        return render_template("proceed.html", score=score)
 
     # "POST" method
     else:
