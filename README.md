@@ -1,53 +1,32 @@
-# Webdb IK: Trivia Royale
-### Groep IK22: Justin Mensah, Timo Rossenaar en Robin Spiers
+# Trivia Royale
+## Groep IK22: Justin Mensah, Timo Rossenaar en Robin Spiers
 
-#### Samenvatting
-Wij willen een trivia website maken, deels gebaseerd op de populaire app trivia crack. Het idee is om een competitie te vormen tussen spelers door middel van een scorebord, die bijhoudt wie de meeste vragen achter elkaar goed heeft beantwoord. Ook willen we bij de geregistreerde accounts player profiles aanmaken, waarbij verschillende gegevens te zien zijn zoals totale aantal beantwoorde vragen, het aantal goede antwoorden tegenover het aantal foute antwoorden etc. De gebruikte trivia vragen zullen uit een online database komen.
+### Samenvatting
+Trivia Royale is de grote hit van 2018 wat betreft trivia-websites. Wij gaan de strijd aan met concurrenten _Trivia Crack_ en _Één tegen Honderd_ om het Trivia-genre een nieuw leven in te blazen.
+We hebben een website gemaakt waarbij je triviavragen kunt beantwoorden en op die manier punten kan verdienen. Als je veel vragen achter elkaar goed beantwoordt krijg je een hoge score, waardoor je hopelijk een hoge plek krijgt op onze Leaderboard op de homepagina!
+Voor de echte liefhebbers gebruiken wij een thema geïnspireerd door de klassieke arcade en 8-bit spellen.
 
-#### Schetsen
-![schets](doc/schets1.jpg)
+### Features
+#### Index pagina:
+* De high scores tabel bekijken
+* Een account registeren
+* Inloggen bij een account
+* Naar het triviaspel gaan
 
-#### Features
-Index pagina:
-* Optie om een account aan te maken
-* Mogelijkheid om het spel te spelen als ingelogde gebruiker
-* Mogelijkheid om het spel te spelen zonder ingelogd te zijn, gegevens worden echter niet opgeslagen
-* All Time High Scores of een Daily Leaderboard, met de beste spelers
+#### Het triviaspel:
+* Eerst kom je bij het pre-game scherm, waar je uit een van de twee willekeurige categoriën kan kiezen
+* Vervolgens krijg je een multiple-choice triviavraag die je moet beantwoorden
+* Na het beantwoorden van een vraag krijg je het juiste antwoord en je huidige score te zien. Daarnaast kun je kiezen of je door wil spelne of juist wil terugkeren naar de homepagina.
+* Ook niet-ingelogde gebruikers kunnen het spel spelen, hierbij worden geen gegevens opgeslagen.
 
-Het spel:
-* Voorafgaand aan een vraag kun je kiezen uit twee willekeurig gekozen categorieën
-* Je krijgt een multiple-choice triviavraag die je moet beantwoorden
-* Na het voltooien van een vraag kun je terugkeren naar de homepagina
-* Na afloop kun je je nieuwe score bekijken
+![question](doc/question.jpg)
+![proceed](doc/proceed.jpg)
 
-Leaderboard pagina:
-* All-time leaderboard, de beste scores allertijden
-* Daily leaderboard, de beste scores van die dag
-* Verschillende leaderboards gebaseerd op moeilijkheidsgraden en categorieën.
+### Organisatie
+We hebben ons niet echt aan een stricte planning gehouden, maar meer gewerkt in de vorm van een simpele structuur met verschillende energie-pieken.
+Uiteindelijk hebben we allemaal gewerkt aan de verschillende onderdelen van de website, maar grotendeels was dit de taakverdeling: Justin was bezig met de database, Robin was vaak bezig met application.py en Timo werkte vooral aan de HTML pagina's.
 
-Persoonlijke profiel:
-* Verschillende gegevens van de speler bekijken, zoals aantal vragen beantwoord en aantal moeilijke vragen beantwoord etc.
-* Mogelijkheid om uit ongeveer 10 standaard-profielfoto's te kiezen
-* Mogelijkheid om je wachtwoord te veranderen
-
-#### Minimum Viable Product
-Features die wij absoluut op onze website willen hebben:
-* Accountregistratie
-* Het spel spelen, waarbij een vraag wordt gerenderd vanuit een online triviadatabase
-* Het aantal vragen dat de speler goed heeft geantwoord totdat de speler stopt met spelen of een vraag fout beantwoordt, vormt de 'best streak'-score. Deze score komt op de main leaderboard terecht.
-
-#### Triviadatabase
-Wij willen gebruik maken van [deze triviadatabase](https://opentdb.com/).
-
-#### Afhankelijkheden
-**Databronnen**
-Wij willen gebruik maken van een online API database voor trivia vragen, het liefst met de mogelijkheid om te kiezen uit verschillende categorieën en moeilijkheidsgraad.
-
-**Externe componenten**
-Wij willen gebruik maken van bootstrap voor het uiterlijk van onze website.
-
-**Concurrentie**
-Bestaande spellen waarmee wij willen concurreren zijn dus voornamelijk 'Trivia Crack' en 'Één tegen Honderd'.
-
-**Moeilijke delen**
-Wij denken dat het implementeren van het spel één van de moeilijkste taken wordt. Momenteel weten we nog niet echt hoe we met behulp van de triviadatabase vragen en antwoorden kunnen verwerken naar onze eigen website, en hoe we dit kunnen filteren wat betreft categorie en moeilijkheidsgraad.
+### Navigatie
+Onze code staat in het mapje `/triviaroyale`. Daarin is `application.py` de Controller, waarbij er extra functies zoals getTrivia() en shuffle() in `helpers.py` staan.
+De classes die voor interactie zorgen met de database staan in `models.py`. Overigens zijn er nog de twee bestanden `categories.py` en `urls.py` waarin dictionaries staan voor respectievelijk het ophalen van een categorienaam aan de hand van een nummer en het ophalen van een .json pakket van de [online triviadatabase](https://opentdb.com/) aan de hand van een categorienaam.
+In het mapje `/templates` staan onze HTML-bestanden, in `/static` staan verschillende CSS-bestanden en ons gebruikte Bootstrap pakket.
