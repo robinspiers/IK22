@@ -1,6 +1,9 @@
 # Webdb IK: Trivia Royale
 ## Groep IK22: Justin Mensah, Timo Rossenaar en Robin Spiers
 
+### Productvideo
+![Klik hier om de productvideo op YouTube te bekijken.](https://www.youtube.com/watch?v=8cFVqMWfXzk&feature=youtu.be)
+
 ### Samenvatting
 Trivia Royale is de grote hit van 2018 wat betreft trivia-websites. Wij gaan de strijd aan met concurrenten _Trivia Crack_ en _Één tegen Honderd_ om het Trivia-genre een nieuw leven in te blazen.
 We hebben een website gemaakt waarbij je triviavragen kunt beantwoorden en op die manier punten kan verdienen. Voor elk juiste antwoord krijg je 10 punten, voor alle verkeerde antwoorden wordt je huidige score teruggezet naar 0. Als je veel vragen achter elkaar goed beantwoordt krijg je een hoge score, waardoor je hopelijk een hoge plek krijgt op onze Leaderboard op de homepagina!
